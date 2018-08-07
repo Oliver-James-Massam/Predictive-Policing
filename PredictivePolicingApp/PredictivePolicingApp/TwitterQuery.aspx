@@ -56,6 +56,9 @@
                                         <h3 class="card-title">Twitter Feed</h3>
                                         <form class="form" action="#">
                                             <%-- The Twitter Feed --%>
+                                            <div id="queryFeed" runat="server" contenteditable="true">
+
+                                            </div>
                                         </form>
                                     </div>
                                 </div>

@@ -62,6 +62,23 @@
                                         <h3 class="card-title">Twitter Feed</h3>
                                         <form class="form" action="#">
                                             <%-- Feed --%>
+                                            <div id="streamFeed" runat="server" contenteditable="true">
+
+                                            </div>
+                                            <%--<div class="container" id="app"> 
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-6 col-md-offset-3">
+                                                        <div v-for="message in messages" class="row animated bounceInRight">
+                                                            <div class="col-sm-12">
+                                                                <img width="80" height="80" class="img-thumbnail img-responsive img-circle" src="{{message.avatar}}" />
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-body">{{message.text}}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>--%>
                                         </form>
                                     </div>
                                 </div>
@@ -74,4 +91,7 @@
 
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.21/vue.min.js" type="application/javascript"></script>
+<script src="https://s3-eu-west-1.amazonaws.com/cdn.emitter.io/js/emitter.min.js" type="text/javascript"></script>
+<script src="js/app.js" type="text/javascript"></script>
 </asp:Content>
