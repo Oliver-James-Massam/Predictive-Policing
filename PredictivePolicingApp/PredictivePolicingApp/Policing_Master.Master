@@ -1,0 +1,79 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Policing_Master.master.cs" Inherits="PredicticePolicing.Policing_Master" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="css/fontawesome-all.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div class="container-fluid" id="wrapper">
+                <%-- Nav --%>
+                <div class="row">
+                    <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2">
+                        <h1 class="site-title"><a href="index.aspx">Honours Project</a></h1>
+
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
+                        <ul class="nav nav-pills flex-column sidebar-nav">
+                            <li class="nav-item"><a class="nav-link active" href="index.aspx"><%--<i class="fas fa-home"></i>--%>Home <span class="sr-only">(current)</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"><%--<i class="fas fa-map"></i>--%>SVM</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"><%--<i class="fas fa-map"></i>--%>Random Forest</a></li>
+                            <li class="nav-item"><a class="nav-link" href="TwitterStream.aspx"><%--<i class="fas fa-map"></i>--%>Twitter Stream</a></li>
+                            <li class="nav-item"><a class="nav-link" href="TwitterQuery.aspx"><%--<i class="fas fa-map"></i>--%>Twitter Query</a></li>
+                            <%--<li class="nav-item"><a class="nav-link" href="widgets.html"><em class="fa fa-calendar-o"></em>Widgets</a></li>
+                            <li class="nav-item"><a class="nav-link" href="charts.html"><em class="fa fa-bar-chart"></em>Charts</a></li>
+                            <li class="nav-item"><a class="nav-link" href="buttons.html"><em class="fa fa-hand-o-up"></em>Buttons</a></li>
+                            <li class="nav-item"><a class="nav-link" href="forms.html"><em class="fa fa-pencil-square-o"></em>Forms</a></li>
+                            <li class="nav-item"><a class="nav-link" href="cards.html"><em class="fa fa-clone"></em>Cards</a></li>--%>
+                        </ul>
+                        <a href="#" class="logout-button"><%--<em class="fas fa-power-off">--%></em>Reset Data</a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Bootstrap core JavaScript
+    ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+            <script src="dist/js/bootstrap.min.js"></script>
+
+            <script src="js/chart.min.js"></script>
+            <script src="js/chart-data.js"></script>
+            <script src="js/easypiechart.js"></script>
+            <script src="js/easypiechart-data.js"></script>
+            <script src="js/bootstrap-datepicker.js"></script>
+            <script src="js/custom.js"></script>
+            <script>
+                var startCharts = function () {
+                    var chart1 = document.getElementById("line-chart").getContext("2d");
+                    window.myLine = new Chart(chart1).Line(lineChartData, {
+                        responsive: true,
+                        scaleLineColor: "rgba(0,0,0,.2)",
+                        scaleGridLineColor: "rgba(0,0,0,.05)",
+                        scaleFontColor: "#c5c7cc "
+                    });
+                };
+                window.setTimeout(startCharts(), 1000);
+	</script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
