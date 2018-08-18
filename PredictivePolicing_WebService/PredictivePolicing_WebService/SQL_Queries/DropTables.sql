@@ -1,0 +1,1 @@
+﻿DROP TABLE [Entities], [Sentiments], [SVM], [CrimeTweets]
