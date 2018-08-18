@@ -11,6 +11,7 @@
                         <h1 class="float-left text-center text-md-left">Twitter Query</h1>
                     </div>
                     <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right">
+                        <button type="button" class="btn btn-lg btn-primary" runat="server" onServerclick="UpdatePage_Click">Update</button>
                     </div>
                     <div class="clear"></div>
                 </header>
@@ -25,19 +26,19 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Category Query</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control" type="text" name="placeholder" placeholder="Crime">
+                                                    <input class="form-control" type="text" name="placeholder" placeholder="Crime" runat="server" id="txtCategory">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Twitter Handle Query</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control" type="text" name="placeholder" placeholder="@CrimeSA">
+                                                    <input class="form-control" type="text" name="placeholder" placeholder="@CrimeSA" runat="server" id="txtTwitterHandle">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">Keyword Query</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control" type="text" name="placeholder" placeholder="Robbery">
+                                                    <input class="form-control" type="text" name="placeholder" placeholder="Robbery" runat="server" id="txtKeyword">
                                                 </div>
                                             </div>
                                         </form>

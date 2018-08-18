@@ -14,7 +14,32 @@ namespace PredictivePolicingApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<String> tweetQuery = Query.Search_SearchTweet();
+            
+            
+        }
+
+        protected void UpdatePage_Click(object sender, EventArgs e)
+        {
+            String category = txtCategory.Value;
+            String twitterHandle = txtTwitterHandle.Value;
+            String keyword = txtKeyword.Value;
+
+            if(category.Equals(""))
+            {
+                category = "Crime";
+            }
+
+            if(twitterHandle.Equals(""))
+            {
+                twitterHandle = "S.A Crime Watch";
+            }
+
+            if(keyword.Equals(""))
+            {
+                keyword = "Crime";
+            }
+
+            List<String> tweetQuery = Query.Search_SearchTweet(keyword);
             
             foreach (String text in tweetQuery)
             {
@@ -27,7 +52,6 @@ namespace PredictivePolicingApp
                                         //"</div>" +
                                         "</div>";
             }
-            
         }
 
         //private void searchQuery()

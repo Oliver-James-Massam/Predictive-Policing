@@ -28,10 +28,10 @@ namespace PredictivePolicingApp.Code.Twitter
             }
         }
 
-        public static List<String> Search_SearchTweet()
+        public static List<String> Search_SearchTweet(String keyword)
         {
             checkHasSetUserCred();
-            var searchParameter = Search.CreateTweetSearchParameter("crime");
+            var searchParameter = Search.CreateTweetSearchParameter(keyword);
 
             //searchParameter.SetGeoCode(new Coordinates(-26.195246, 28.034088), 100, DistanceMeasure.Kilometers);
             //searchParameter.Lang = LanguageFilter.English;
