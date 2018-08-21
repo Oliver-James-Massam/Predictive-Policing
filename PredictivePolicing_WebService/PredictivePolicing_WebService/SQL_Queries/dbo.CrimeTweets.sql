@@ -2,7 +2,7 @@
     [tweet_id]          INT            IDENTITY(1,1)	NOT NULL,
     [message]           VARCHAR (160)  NOT NULL,
     [latitude]          FLOAT   NULL,
-    [logitude]          FLOAT   NULL,
+    [longitude]          FLOAT   NULL,
     [location]          VARCHAR (60)   NULL,
     [post_datetime]     DATETIME2 (7)  NOT NULL,
     [recieved_datetime] DATETIME2 (7)  NOT NULL,
@@ -12,4 +12,3 @@
     [tags]              VARCHAR (MAX)  NULL,
     PRIMARY KEY (tweet_id)
 );
-

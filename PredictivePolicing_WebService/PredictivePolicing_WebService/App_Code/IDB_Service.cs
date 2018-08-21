@@ -23,13 +23,16 @@ public interface IService
     // TODO: Add your service operations here
     //---------------------------------------- Crime Tweets -----------------------------------------------------
     [OperationContract]
-    CrimeTweets[] getCrimeTweets();
+    List<CrimeTweets> getCrimeTweets();
 
     [OperationContract]
     CrimeTweets getCrimeTweet(int tweet_id);
 
     [OperationContract]
-    string setCrimeTweet(int tweet_id);
+    string setCrimeTweet(int tweet_id, string message, double latitude, double longitude, string location, DateTime post_datetime, DateTime recieved_datetime, string twitter_handle, string weather, string mentions, string tags);
+
+    [OperationContract]
+    string addCrimeTweet(string message, double latitude, double longitude, string location, DateTime post_datetime, DateTime recieved_datetime, string twitter_handle, string weather, string mentions, string tags);
 
     [OperationContract]
     string deleteCrimeTweet(int tweet_id);
@@ -42,7 +45,10 @@ public interface IService
     SVM getSVM(int sv_id);
 
     [OperationContract]
-    string setSVM(int sv_id);
+    string setSVM(int sv_id, string support_vectors, string alphas, string weighted_sums, string label, string kernal, int tweet_id);
+
+    [OperationContract]
+    string addSVM(string support_vectors, string alphas, string weighted_sums, string label, string kernal, int tweet_id);
 
     [OperationContract]
     string deleteSVM(int sv_id);
@@ -55,7 +61,10 @@ public interface IService
     Sentiments getSentiment(int sentiment_id);
 
     [OperationContract]
-    string setSentiment(int sentiment_id);
+    string setSentiment(int sentiment_id, double sentiment_total, string category_primary, string key_phrases, int tweet_id);
+
+    [OperationContract]
+    string addSentiment(double sentiment_total, string category_primary, string key_phrases, int tweet_id);
 
     [OperationContract]
     string deleteSentiment(int sentiment_id);
@@ -68,7 +77,10 @@ public interface IService
     Entities getEntity(int entity_id);
 
     [OperationContract]
-    string setEntity(int entity_id);
+    string setEntity(int entity_id, string name, string category_type, double senti_score, double senti_magnitude, double senti_salience, int sentiment_id);
+
+    [OperationContract]
+    string addEntity(string name, string category_type, double senti_score, double senti_magnitude, double senti_salience, int sentiment_id);
 
     [OperationContract]
     string deleteEntity(int entity_id);
