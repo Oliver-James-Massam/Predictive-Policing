@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -29,13 +30,13 @@ public interface IService
     CrimeTweets getCrimeTweet(int tweet_id);
 
     [OperationContract]
-    string setCrimeTweet(CrimeTweets crime_tweet);
+    int setCrimeTweet(CrimeTweets crime_tweet);
 
     [OperationContract]
-    string addCrimeTweet(CrimeTweets crime_tweet);
+    int addCrimeTweet(CrimeTweets crime_tweet);
 
     [OperationContract]
-    string deleteCrimeTweet(int tweet_id);
+    int deleteCrimeTweet(int tweet_id);
 
     //---------------------------------------- SVM -----------------------------------------------------
     [OperationContract]
@@ -45,13 +46,13 @@ public interface IService
     SVM getSVM(int sv_id);
 
     [OperationContract]
-    string setSVM(SVM svm);
+    int setSVM(SVM svm);
 
     [OperationContract]
-    string addSVM(SVM svm);
+    int addSVM(SVM svm);
 
     [OperationContract]
-    string deleteSVM(int sv_id);
+    int deleteSVM(int sv_id);
 
     //---------------------------------------- Sentiments -----------------------------------------------------
     [OperationContract]
@@ -61,13 +62,13 @@ public interface IService
     Sentiments getSentiment(int sentiment_id);
 
     [OperationContract]
-    string setSentiment(Sentiments sentiment);
+    int setSentiment(Sentiments sentiment);
 
     [OperationContract]
-    string addSentiment(Sentiments sentiment);
+    int addSentiment(Sentiments sentiment);
 
     [OperationContract]
-    string deleteSentiment(int sentiment_id);
+    int deleteSentiment(int sentiment_id);
 
     //---------------------------------------- Entities -----------------------------------------------------
     [OperationContract]
@@ -77,13 +78,13 @@ public interface IService
     Entities getEntity(int entity_id);
 
     [OperationContract]
-    string setEntity(Entities entity);
+    int setEntity(Entities entity);
 
     [OperationContract]
-    string addEntity(Entities entity);
+    int addEntity(Entities entity);
 
     [OperationContract]
-    string deleteEntity(int entity_id);
+    int deleteEntity(int entity_id);
 
     //---------------------------------------- Other -----------------------------------------------------
     [OperationContract]

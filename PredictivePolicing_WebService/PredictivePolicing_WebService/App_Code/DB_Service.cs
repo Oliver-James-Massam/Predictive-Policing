@@ -161,29 +161,33 @@ public class Service : IService
         return mytweet;
     }
 
-    public string setCrimeTweet(CrimeTweets crime_tweet)
+    public int setCrimeTweet(CrimeTweets crime_tweet)
     {
+        int statusCode = -1;
+
         SqlConnection connection = new SqlConnection(connectionString);
-        string query = "UPDATE CrimeTweets SET Title = @title, Name = @name, Surname = @surname, Email = @email, QRCode = @qrcode, Attendence = @attendance, TableID = @tableID, Response = @response WHERE GuestID = @id;";
+        string query = "UPDATE CrimeTweets SET message = @message, latitude = @latitude, longitude = @longitude, location = @location, post_datetime = @post_datetime, Attendence = @attendance, TableID = @tableID, Response = @response WHERE GuestID = @id;";
         SqlCommand command = new SqlCommand(query);
-        command.Parameters.Add("@id", SqlDbType.Int);
-        command.Parameters.Add("@title", SqlDbType.VarChar, 10);
-        command.Parameters.Add("@name", SqlDbType.VarChar, 100);
-        command.Parameters.Add("@surname", SqlDbType.VarChar, 100);
-        command.Parameters.Add("@email", SqlDbType.VarChar, 255);
-        command.Parameters.Add("@attendance", SqlDbType.Bit);
-        command.Parameters.Add("@tableID", SqlDbType.Int);
-        command.Parameters.Add("@response", SqlDbType.VarChar, 15);
-        command.Parameters.Add("@qrcode", SqlDbType.VarChar, 255);
-        command.Parameters["@id"].Value = guest.guestID;
-        command.Parameters["@title"].Value = guest.title;
-        command.Parameters["@name"].Value = guest.name;
-        command.Parameters["@surname"].Value = guest.surname;
-        command.Parameters["@email"].Value = guest.email;
-        command.Parameters["@attendance"].Value = guest.attendance;
-        command.Parameters["@tableID"].Value = guest.tableID;
-        command.Parameters["@response"].Value = guest.response;
-        command.Parameters["@qrcode"].Value = guest.qrCode;
+        command.Parameters.Add("@message", SqlDbType.VarChar, 160);
+        command.Parameters.Add("@latitude", SqlDbType.Float);
+        command.Parameters.Add("@longitude", SqlDbType.Float);
+        command.Parameters.Add("@location", SqlDbType.VarChar, 60);
+        command.Parameters.Add("@post_datetime", SqlDbType.DateTime2);
+        command.Parameters.Add("@recieved_datetime", SqlDbType.DateTime2);
+        command.Parameters.Add("@twitter_handle", SqlDbType.VarChar, 20);
+        command.Parameters.Add("@weather", SqlDbType.VarChar);// Varchar Max doesnt require you to specify the char size
+        command.Parameters.Add("@mentions", SqlDbType.VarChar);
+        command.Parameters.Add("@tags", SqlDbType.VarChar);
+        command.Parameters["@message"].Value = crime_tweet.message;
+        command.Parameters["@latitude"].Value = crime_tweet.latitude;
+        command.Parameters["@longitude"].Value = crime_tweet.longitude;
+        command.Parameters["@location"].Value = crime_tweet.location;
+        command.Parameters["@post_datetime"].Value = crime_tweet.post_datetime;
+        command.Parameters["@recieved_datetime"].Value = crime_tweet.recieved_datetime;
+        command.Parameters["@twitter_handle"].Value = crime_tweet.twitter_handle;
+        command.Parameters["@weather"].Value = crime_tweet.weather;
+        command.Parameters["@mentions"].Value = crime_tweet.mentions;
+        command.Parameters["@tags"].Value = crime_tweet.tags;
         command.Connection = connection;
         command.CommandType = CommandType.Text;
 
@@ -204,14 +208,83 @@ public class Service : IService
         return statusCode;
     }
 
-    public string addCrimeTweet(CrimeTweets crime_tweet)
+    // <returns>ID of entry or negative for failure. -1 INSERT failure. -2 duplicate </returns>
+    public int addCrimeTweet(CrimeTweets crime_tweet)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "INSERT INTO CrimeTweets (message, latitude, longitude, location, post_datetime, recieved_datetime, twitter_handle, weather, mentions, tags) " +
+                       "OUTPUT INSERTED.tweet_id " +
+                       "VALUES (@message, @latitude, @longitude, @location, @post_datetime, @recieved_datetime, @twitter_handle, @weather, @mentions, @tags); ";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@message", SqlDbType.VarChar, 160);
+        command.Parameters.Add("@latitude", SqlDbType.Float);
+        command.Parameters.Add("@longitude", SqlDbType.Float);
+        command.Parameters.Add("@location", SqlDbType.VarChar, 60);
+        command.Parameters.Add("@post_datetime", SqlDbType.DateTime2);
+        command.Parameters.Add("@recieved_datetime", SqlDbType.DateTime2);
+        command.Parameters.Add("@twitter_handle", SqlDbType.VarChar, 20);
+        command.Parameters.Add("@weather", SqlDbType.VarChar);
+        command.Parameters.Add("@mentions", SqlDbType.VarChar);
+        command.Parameters.Add("@tags", SqlDbType.VarChar);
+        command.Parameters["@message"].Value = crime_tweet.message;
+        command.Parameters["@latitude"].Value = crime_tweet.latitude;
+        command.Parameters["@longitude"].Value = crime_tweet.longitude;
+        command.Parameters["@location"].Value = crime_tweet.location;
+        command.Parameters["@post_datetime"].Value = crime_tweet.post_datetime;
+        command.Parameters["@recieved_datetime"].Value = crime_tweet.recieved_datetime;
+        command.Parameters["@twitter_handle"].Value = crime_tweet.twitter_handle;
+        command.Parameters["@weather"].Value = crime_tweet.weather;
+        command.Parameters["@mentions"].Value = crime_tweet.mentions;
+        command.Parameters["@tags"].Value = crime_tweet.tags;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = (Int32)command.ExecuteScalar();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+            if (ex.Number == 2627) statusCode = -2;
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return statusCode;
     }
 
-    public string deleteCrimeTweet(int tweet_id)
+    public int deleteCrimeTweet(int tweet_id)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "DELETE FROM CrimeTweets WHERE tweet_id = @id;";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int);
+        command.Parameters["@id"].Value = tweet_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = command.ExecuteNonQuery();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return statusCode;
     }
 
     public SVM[] getSVMs()
@@ -224,19 +297,43 @@ public class Service : IService
         throw new NotImplementedException();
     }
 
-    public string setSVM(SVM svm)
+    public int setSVM(SVM svm)
     {
         throw new NotImplementedException();
     }
 
-    public string addSVM(SVM svm)
+    public int addSVM(SVM svm)
     {
         throw new NotImplementedException();
     }
 
-    public string deleteSVM(int sv_id)
+    public int deleteSVM(int sv_id)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "DELETE FROM SVM WHERE sv_id = @id;";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int);
+        command.Parameters["@id"].Value = sv_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = command.ExecuteNonQuery();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return statusCode;
     }
 
     public Sentiments[] getSentiments()
@@ -249,19 +346,43 @@ public class Service : IService
         throw new NotImplementedException();
     }
 
-    public string setSentiment(Sentiments sentiment)
+    public int setSentiment(Sentiments sentiment)
     {
         throw new NotImplementedException();
     }
 
-    public string addSentiment(Sentiments sentiment)
+    public int addSentiment(Sentiments sentiment)
     {
         throw new NotImplementedException();
     }
 
-    public string deleteSentiment(int sentiment_id)
+    public int deleteSentiment(int sentiment_id)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "DELETE FROM Sentiments WHERE sentiment_id = @id;";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int);
+        command.Parameters["@id"].Value = sentiment_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = command.ExecuteNonQuery();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return statusCode;
     }
 
     public Entities[] getEntities()
@@ -274,19 +395,43 @@ public class Service : IService
         throw new NotImplementedException();
     }
 
-    public string setEntity(Entities entity)
+    public int setEntity(Entities entity)
     {
         throw new NotImplementedException();
     }
 
-    public string addEntity(Entities entity)
+    public int addEntity(Entities entity)
     {
         throw new NotImplementedException();
     }
 
-    public string deleteEntity(int entity_id)
+    public int deleteEntity(int entity_id)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "DELETE FROM Entities WHERE entity_id = @id;";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int);
+        command.Parameters["@id"].Value = entity_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = command.ExecuteNonQuery();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return statusCode;
     }
 
     public string[] refreshDBData()
