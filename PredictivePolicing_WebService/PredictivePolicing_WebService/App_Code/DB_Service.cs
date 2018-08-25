@@ -137,7 +137,6 @@ public class Service : IService
             if (reader.HasRows)
             {
                 reader.Read();
-                mytweet.tweet_id = reader.GetInt32(reader.GetOrdinal("tweet_id"));
                 mytweet.tweet_id = reader.GetInt32(tweetIDIndex);
                 mytweet.message = reader.GetString(messageIndex);
                 mytweet.latitude = getDoubleSafe(reader, latitudeIndex);//Nullable
@@ -168,26 +167,25 @@ public class Service : IService
         SqlConnection connection = new SqlConnection(connectionString);
         string query = "UPDATE CrimeTweets SET message = @message, latitude = @latitude, longitude = @longitude, location = @location, post_datetime = @post_datetime, Attendence = @attendance, TableID = @tableID, Response = @response WHERE GuestID = @id;";
         SqlCommand command = new SqlCommand(query);
-        command.Parameters.Add("@message", SqlDbType.VarChar, 160);
-        command.Parameters.Add("@latitude", SqlDbType.Float);
-        command.Parameters.Add("@longitude", SqlDbType.Float);
-        command.Parameters.Add("@location", SqlDbType.VarChar, 60);
-        command.Parameters.Add("@post_datetime", SqlDbType.DateTime2);
-        command.Parameters.Add("@recieved_datetime", SqlDbType.DateTime2);
-        command.Parameters.Add("@twitter_handle", SqlDbType.VarChar, 20);
-        command.Parameters.Add("@weather", SqlDbType.VarChar);// Varchar Max doesnt require you to specify the char size
-        command.Parameters.Add("@mentions", SqlDbType.VarChar);
-        command.Parameters.Add("@tags", SqlDbType.VarChar);
-        command.Parameters["@message"].Value = crime_tweet.message;
+        command.Parameters.Add("@message", SqlDbType.VarChar, 160).Value = crime_tweet.message;
+
+        command.Parameters.Add("@latitude", SqlDbType.Decimal);
+        command.Parameters["@latitude"].Precision = 38;
+        command.Parameters["@latitude"].Scale = 19;
         command.Parameters["@latitude"].Value = crime_tweet.latitude;
+
+        command.Parameters.Add("@longitude", SqlDbType.Decimal);
+        command.Parameters["@longitude"].Precision = 38;
+        command.Parameters["@longitude"].Scale = 19;
         command.Parameters["@longitude"].Value = crime_tweet.longitude;
-        command.Parameters["@location"].Value = crime_tweet.location;
-        command.Parameters["@post_datetime"].Value = crime_tweet.post_datetime;
-        command.Parameters["@recieved_datetime"].Value = crime_tweet.recieved_datetime;
-        command.Parameters["@twitter_handle"].Value = crime_tweet.twitter_handle;
-        command.Parameters["@weather"].Value = crime_tweet.weather;
-        command.Parameters["@mentions"].Value = crime_tweet.mentions;
-        command.Parameters["@tags"].Value = crime_tweet.tags;
+
+        command.Parameters.Add("@location", SqlDbType.VarChar, 60).Value = crime_tweet.location;
+        command.Parameters.Add("@post_datetime", SqlDbType.DateTime2, 27).Value = crime_tweet.post_datetime;
+        command.Parameters.Add("@recieved_datetime", SqlDbType.DateTime2, 27).Value = crime_tweet.recieved_datetime;
+        command.Parameters.Add("@twitter_handle", SqlDbType.VarChar, 20).Value = crime_tweet.twitter_handle;
+        command.Parameters.Add("@weather", SqlDbType.VarChar, -1).Value = crime_tweet.weather;
+        command.Parameters.Add("@mentions", SqlDbType.VarChar, -1).Value = crime_tweet.mentions;
+        command.Parameters.Add("@tags", SqlDbType.VarChar, -1).Value = crime_tweet.tags;
         command.Connection = connection;
         command.CommandType = CommandType.Text;
 
@@ -214,30 +212,30 @@ public class Service : IService
         int statusCode = -1;
 
         SqlConnection connection = new SqlConnection(connectionString);
-        string query = "INSERT INTO CrimeTweets (message, latitude, longitude, location, post_datetime, recieved_datetime, twitter_handle, weather, mentions, tags) " +
+        string query = "INSERT INTO CrimeTweets (message, latitude, longitude, location, post_datetime, recieved_datetime, twitter_handle, weather, mentions, tags) " + //"OUTPUT INSERTED.tweet_id " +
                        "OUTPUT INSERTED.tweet_id " +
-                       "VALUES (@message, @latitude, @longitude, @location, @post_datetime, @recieved_datetime, @twitter_handle, @weather, @mentions, @tags); ";
+                       "VALUES (@message, @latitude, @longitude, @location, @post_datetime, @recieved_datetime, @twitter_handle, @weather, @mentions, @tags);";
+        
         SqlCommand command = new SqlCommand(query);
-        command.Parameters.Add("@message", SqlDbType.VarChar, 160);
-        command.Parameters.Add("@latitude", SqlDbType.Float);
-        command.Parameters.Add("@longitude", SqlDbType.Float);
-        command.Parameters.Add("@location", SqlDbType.VarChar, 60);
-        command.Parameters.Add("@post_datetime", SqlDbType.DateTime2);
-        command.Parameters.Add("@recieved_datetime", SqlDbType.DateTime2);
-        command.Parameters.Add("@twitter_handle", SqlDbType.VarChar, 20);
-        command.Parameters.Add("@weather", SqlDbType.VarChar);
-        command.Parameters.Add("@mentions", SqlDbType.VarChar);
-        command.Parameters.Add("@tags", SqlDbType.VarChar);
-        command.Parameters["@message"].Value = crime_tweet.message;
+        command.Parameters.Add("@message", SqlDbType.VarChar, 160).Value = crime_tweet.message;
+
+        command.Parameters.Add("@latitude", SqlDbType.Decimal);
+        command.Parameters["@latitude"].Precision = 38;
+        command.Parameters["@latitude"].Scale = 19;
         command.Parameters["@latitude"].Value = crime_tweet.latitude;
+
+        command.Parameters.Add("@longitude", SqlDbType.Decimal);
+        command.Parameters["@longitude"].Precision = 38;
+        command.Parameters["@longitude"].Scale = 19;
         command.Parameters["@longitude"].Value = crime_tweet.longitude;
-        command.Parameters["@location"].Value = crime_tweet.location;
-        command.Parameters["@post_datetime"].Value = crime_tweet.post_datetime;
-        command.Parameters["@recieved_datetime"].Value = crime_tweet.recieved_datetime;
-        command.Parameters["@twitter_handle"].Value = crime_tweet.twitter_handle;
-        command.Parameters["@weather"].Value = crime_tweet.weather;
-        command.Parameters["@mentions"].Value = crime_tweet.mentions;
-        command.Parameters["@tags"].Value = crime_tweet.tags;
+
+        command.Parameters.Add("@location", SqlDbType.VarChar, 60).Value = crime_tweet.location;
+        command.Parameters.Add("@post_datetime", SqlDbType.DateTime2, 27).Value = crime_tweet.post_datetime;
+        command.Parameters.Add("@recieved_datetime", SqlDbType.DateTime2, 27).Value = crime_tweet.recieved_datetime;
+        command.Parameters.Add("@twitter_handle", SqlDbType.VarChar, 20).Value = crime_tweet.twitter_handle;
+        command.Parameters.Add("@weather", SqlDbType.VarChar, -1).Value = crime_tweet.weather;
+        command.Parameters.Add("@mentions", SqlDbType.VarChar, -1).Value = crime_tweet.mentions;
+        command.Parameters.Add("@tags", SqlDbType.VarChar, -1).Value = crime_tweet.tags;
         command.Connection = connection;
         command.CommandType = CommandType.Text;
 
@@ -250,7 +248,6 @@ public class Service : IService
         catch (SqlException ex)
         {
             Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
-            if (ex.Number == 2627) statusCode = -2;
         }
         command.Connection.Close();
         command.Dispose();
@@ -287,14 +284,99 @@ public class Service : IService
         return statusCode;
     }
 
-    public SVM[] getSVMs()
+    public List<SVM> getSVMs()
     {
-        throw new NotImplementedException();
+        List<SVM> svms = new List<SVM>();
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "SELECT * FROM SVM";
+        SqlCommand command = new SqlCommand(query);
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            SqlDataReader reader = command.ExecuteReader();
+            //Column Indexs
+            int sv_idIndex = reader.GetOrdinal("sv_id");
+            int support_vectorsIndex = reader.GetOrdinal("support_vectors");
+            int alphasIndex = reader.GetOrdinal("alphas");
+            int weighted_sumsIndex = reader.GetOrdinal("weighted_sums");
+            int labelIndex = reader.GetOrdinal("label");
+            int kernalIndex = reader.GetOrdinal("kernal");
+            int tweet_idIndex = reader.GetOrdinal("tweet_id");
+
+            while (reader.Read())
+            {
+                SVM svm = new SVM();
+                svm.sv_id = reader.GetInt32(sv_idIndex);
+                svm.support_vectors = reader.GetString(support_vectorsIndex);
+                svm.alphas = reader.GetString(alphasIndex);
+                svm.weighted_sums = reader.GetString(weighted_sumsIndex);
+                svm.label = reader.GetString(labelIndex);
+                svm.kernal = reader.GetString(kernalIndex);
+                svm.tweet_id = reader.GetInt32(tweet_idIndex);
+                svms.Add(svm);
+            }
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return svms;
     }
 
     public SVM getSVM(int sv_id)
     {
-        throw new NotImplementedException();
+        SVM mySVM = new SVM();
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "SELECT * FROM SVM WHERE sv_id = @id";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int);
+        command.Parameters["@id"].Value = sv_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            SqlDataReader reader = command.ExecuteReader();
+            //Coloumns Index
+            int sv_idIndex = reader.GetOrdinal("sv_id");
+            int support_vectorsIndex = reader.GetOrdinal("support_vectors");
+            int alphasIndex = reader.GetOrdinal("alphas");
+            int weighted_sumsIndex = reader.GetOrdinal("weighted_sums");
+            int labelIndex = reader.GetOrdinal("label");
+            int kernalIndex = reader.GetOrdinal("kernal");
+            int tweet_idIndex = reader.GetOrdinal("tweet_id");
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+                mySVM.sv_id = reader.GetInt32(sv_idIndex);
+                mySVM.support_vectors = reader.GetString(support_vectorsIndex);
+                mySVM.alphas = reader.GetString(alphasIndex);
+                mySVM.weighted_sums = reader.GetString(weighted_sumsIndex);
+                mySVM.label = reader.GetString(labelIndex);
+                mySVM.kernal = reader.GetString(kernalIndex);
+                mySVM.tweet_id = reader.GetInt32(tweet_idIndex);
+            }
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return mySVM;
     }
 
     public int setSVM(SVM svm)
@@ -336,14 +418,91 @@ public class Service : IService
         return statusCode;
     }
 
-    public Sentiments[] getSentiments()
+    public List<Sentiments> getSentiments()
     {
-        throw new NotImplementedException();
+        List<Sentiments> sentiments = new List<Sentiments>();
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "SELECT * FROM Sentiments";
+        SqlCommand command = new SqlCommand(query);
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            SqlDataReader reader = command.ExecuteReader();
+            //Column Indexs
+            int sentiment_idIndex = reader.GetOrdinal("sentiment_id");
+            int sentiment_totalIndex = reader.GetOrdinal("sentiment_total");
+            int category_primaryIndex = reader.GetOrdinal("category_primary");
+            int key_phrasesIndex = reader.GetOrdinal("key_phrases");
+            int tweet_idIndex = reader.GetOrdinal("tweet_id");
+
+            while (reader.Read())
+            {
+                Sentiments sentiment = new Sentiments();
+                sentiment.sentiment_id = reader.GetInt32(sentiment_idIndex);
+                sentiment.sentiment_total = reader.GetDouble(sentiment_totalIndex);
+                sentiment.category_primary = reader.GetString(category_primaryIndex);
+                sentiment.key_phrases = reader.GetString(key_phrasesIndex);
+                sentiment.tweet_id = reader.GetInt32(tweet_idIndex);
+                sentiments.Add(sentiment);
+            }
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return sentiments;
     }
 
     public Sentiments getSentiment(int sentiment_id)
     {
-        throw new NotImplementedException();
+        Sentiments mySentiment = new Sentiments();
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "SELECT * FROM Sentiments WHERE sentiment_id = @id";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int);
+        command.Parameters["@id"].Value = sentiment_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            SqlDataReader reader = command.ExecuteReader();
+            //Coloumns Index
+            int sentiment_idIndex = reader.GetOrdinal("sentiment_id");
+            int sentiment_totalIndex = reader.GetOrdinal("sentiment_total");
+            int category_primaryIndex = reader.GetOrdinal("category_primary");
+            int key_phrasesIndex = reader.GetOrdinal("key_phrases");
+            int tweet_idIndex = reader.GetOrdinal("tweet_id");
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+                mySentiment.sentiment_id = reader.GetInt32(sentiment_idIndex);
+                mySentiment.sentiment_total = reader.GetDouble(sentiment_totalIndex);
+                mySentiment.category_primary = reader.GetString(category_primaryIndex);
+                mySentiment.key_phrases = reader.GetString(key_phrasesIndex);
+                mySentiment.tweet_id = reader.GetInt32(tweet_idIndex);
+            }
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return mySentiment;
     }
 
     public int setSentiment(Sentiments sentiment)
@@ -385,14 +544,99 @@ public class Service : IService
         return statusCode;
     }
 
-    public Entities[] getEntities()
+    public List<Entities> getEntities()
     {
-        throw new NotImplementedException();
+        List<Entities> entities = new List<Entities>();
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "SELECT * FROM Entities";
+        SqlCommand command = new SqlCommand(query);
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            SqlDataReader reader = command.ExecuteReader();
+            //Column Indexs
+            int entity_idIndex = reader.GetOrdinal("entity_id");
+            int nameIndex = reader.GetOrdinal("name");
+            int category_typeIndex = reader.GetOrdinal("category_type");
+            int senti_scoreIndex = reader.GetOrdinal("senti_score");
+            int senti_magnitudeIndex = reader.GetOrdinal("senti_magnitude");
+            int senti_salienceIndex = reader.GetOrdinal("senti_salience");
+            int sentiment_idIndex = reader.GetOrdinal("sentiment_id");
+
+            while (reader.Read())
+            {
+                Entities entity = new Entities();
+                entity.entity_id = reader.GetInt32(entity_idIndex);
+                entity.name = reader.GetString(nameIndex);
+                entity.category_type = reader.GetString(category_typeIndex);
+                entity.senti_score = reader.GetDouble(senti_scoreIndex);
+                entity.senti_magnitude = reader.GetDouble(senti_magnitudeIndex);
+                entity.senti_salience = reader.GetDouble(senti_salienceIndex);
+                entity.sentiment_id = reader.GetInt32(sentiment_idIndex);
+                entities.Add(entity);
+            }
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return entities;
     }
 
     public Entities getEntity(int entity_id)
     {
-        throw new NotImplementedException();
+        Entities myEntity = new Entities();
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "SELECT * FROM Entities WHERE entity_id = @id";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int);
+        command.Parameters["@id"].Value = entity_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            SqlDataReader reader = command.ExecuteReader();
+            //Coloumns Index
+            int entity_idIndex = reader.GetOrdinal("entity_id");
+            int nameIndex = reader.GetOrdinal("name");
+            int category_typeIndex = reader.GetOrdinal("category_type");
+            int senti_scoreIndex = reader.GetOrdinal("senti_score");
+            int senti_magnitudeIndex = reader.GetOrdinal("senti_magnitude");
+            int senti_salienceIndex = reader.GetOrdinal("senti_salience");
+            int sentiment_idIndex = reader.GetOrdinal("sentiment_id");
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+                myEntity.entity_id = reader.GetInt32(entity_idIndex);
+                myEntity.name = reader.GetString(nameIndex);
+                myEntity.category_type = reader.GetString(category_typeIndex);
+                myEntity.senti_score = reader.GetDouble(senti_scoreIndex);
+                myEntity.senti_magnitude = reader.GetDouble(senti_magnitudeIndex);
+                myEntity.senti_salience = reader.GetDouble(senti_salienceIndex);
+                myEntity.sentiment_id = reader.GetInt32(sentiment_idIndex);
+            }
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return myEntity;
     }
 
     public int setEntity(Entities entity)
