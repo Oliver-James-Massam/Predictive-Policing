@@ -165,8 +165,20 @@ public class Service : IService
         int statusCode = -1;
 
         SqlConnection connection = new SqlConnection(connectionString);
-        string query = "UPDATE CrimeTweets SET message = @message, latitude = @latitude, longitude = @longitude, location = @location, post_datetime = @post_datetime, Attendence = @attendance, TableID = @tableID, Response = @response WHERE GuestID = @id;";
+        string query = "UPDATE CrimeTweets " +
+                       "SET message = @message, " +
+                           "latitude = @latitude, " +
+                           "longitude = @longitude, " +
+                           "location = @location, " +
+                           "post_datetime = @post_datetime, " +
+                           "recieved_datetime = @recieved_datetime, " +
+                           "twitter_handle = @twitter_handle, " +
+                           "weather = @weather, " +
+                           "mentions = @mentions, " +
+                           "tags = @tags " +
+                       "WHERE tweet_id = @id;";
         SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int).Value = crime_tweet.tweet_id;
         command.Parameters.Add("@message", SqlDbType.VarChar, 160).Value = crime_tweet.message;
 
         command.Parameters.Add("@latitude", SqlDbType.Decimal);
@@ -381,12 +393,79 @@ public class Service : IService
 
     public int setSVM(SVM svm)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "UPDATE SVM " +
+                       "SET support_vectors = @support_vectors, " +
+                           "alphas = @alphas, " +
+                           "weighted_sums = @weighted_sums, " +
+                           "label = @label, " +
+                           "kernal = @kernal, " +
+                           "tweet_id = @tweet_id " +
+                       "WHERE sv_id = @id;";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int).Value = svm.sv_id;
+        command.Parameters.Add("@support_vectors", SqlDbType.VarChar, -1).Value = svm.support_vectors;
+        command.Parameters.Add("@alphas", SqlDbType.VarChar, -1).Value = svm.alphas;
+        command.Parameters.Add("@weighted_sums", SqlDbType.VarChar, -1).Value = svm.weighted_sums;
+        command.Parameters.Add("@label", SqlDbType.VarChar, -1).Value = svm.label;
+        command.Parameters.Add("@kernal", SqlDbType.VarChar, -1).Value = svm.kernal;
+        command.Parameters.Add("@tweet_id", SqlDbType.Int).Value = svm.tweet_id;
+
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = command.ExecuteNonQuery();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+
+        return statusCode;
     }
 
     public int addSVM(SVM svm)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "INSERT INTO SVM (support_vectors, alphas, weighted_sums, label, kernal, tweet_id) " +
+                       "OUTPUT INSERTED.sv_id " +
+                       "VALUES (@support_vectors, @alphas, @weighted_sums, @label, @kernal, @tweet_id);";
+
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@support_vectors", SqlDbType.VarChar, -1).Value = svm.support_vectors;
+        command.Parameters.Add("@alphas", SqlDbType.VarChar, -1).Value = svm.alphas;
+        command.Parameters.Add("@weighted_sums", SqlDbType.VarChar, -1).Value = svm.weighted_sums;
+        command.Parameters.Add("@label", SqlDbType.VarChar, -1).Value = svm.label;
+        command.Parameters.Add("@kernal", SqlDbType.VarChar, -1).Value = svm.kernal;
+        command.Parameters.Add("@tweet_id", SqlDbType.Int).Value = svm.tweet_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = (Int32)command.ExecuteScalar();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return statusCode;
     }
 
     public int deleteSVM(int sv_id)
@@ -507,12 +586,82 @@ public class Service : IService
 
     public int setSentiment(Sentiments sentiment)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "UPDATE Sentiments " +
+                       "SET sentiment_total = @sentiment_total, " +
+                           "category_primary = @category_primary, " +
+                           "key_phrases = @key_phrases, " +
+                           "tweet_id = @tweet_id " +
+                       "WHERE sentiment_id = @id;";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int).Value = sentiment.sentiment_id;
+
+        command.Parameters.Add("@sentiment_total", SqlDbType.Decimal);
+        command.Parameters["@sentiment_total"].Precision = 38;
+        command.Parameters["@sentiment_total"].Scale = 19;
+        command.Parameters["@sentiment_total"].Value = sentiment.sentiment_total;
+
+        command.Parameters.Add("@category_primary", SqlDbType.VarChar, -1).Value = sentiment.category_primary;
+        command.Parameters.Add("@key_phrases", SqlDbType.VarChar, -1).Value = sentiment.key_phrases;
+        command.Parameters.Add("@tweet_id", SqlDbType.Int).Value = sentiment.tweet_id;
+
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = command.ExecuteNonQuery();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+
+        return statusCode;
     }
 
     public int addSentiment(Sentiments sentiment)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "INSERT INTO Sentiments (sentiment_total, category_primary, key_phrases, tweet_id) " +
+                       "OUTPUT INSERTED.sentiment_id " +
+                       "VALUES (@sentiment_total, @category_primary, @key_phrases, @tweet_id);";
+
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@sentiment_total", SqlDbType.Decimal);
+        command.Parameters["@sentiment_total"].Precision = 38;
+        command.Parameters["@sentiment_total"].Scale = 19;
+        command.Parameters["@sentiment_total"].Value = sentiment.sentiment_total;
+
+        command.Parameters.Add("@category_primary", SqlDbType.VarChar, -1).Value = sentiment.category_primary;
+        command.Parameters.Add("@key_phrases", SqlDbType.VarChar, -1).Value = sentiment.key_phrases;
+        command.Parameters.Add("@tweet_id", SqlDbType.Int).Value = sentiment.tweet_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = (Int32)command.ExecuteScalar();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return statusCode;
     }
 
     public int deleteSentiment(int sentiment_id)
@@ -641,12 +790,104 @@ public class Service : IService
 
     public int setEntity(Entities entity)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "UPDATE Entities " +
+                       "SET name = @name, " +
+                           "category_type = @category_type, " +
+                           "senti_score = @senti_score, " +
+                           "senti_magnitude = @senti_magnitude, " +
+                           "senti_salience = @senti_salience, " +
+                           "sentiment_id = @sentiment_id " +
+                       "WHERE entity_id = @id;";
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@id", SqlDbType.Int).Value = entity.entity_id;
+        command.Parameters.Add("@name", SqlDbType.VarChar, -1).Value = entity.name;
+        command.Parameters.Add("@category_type", SqlDbType.VarChar, -1).Value = entity.category_type;
+
+        command.Parameters.Add("@senti_score", SqlDbType.Decimal);
+        command.Parameters["@senti_score"].Precision = 38;
+        command.Parameters["@senti_score"].Scale = 19;
+        command.Parameters["@senti_score"].Value = entity.senti_score;
+
+        command.Parameters.Add("@senti_magnitude", SqlDbType.Decimal);
+        command.Parameters["@senti_magnitude"].Precision = 38;
+        command.Parameters["@senti_magnitude"].Scale = 19;
+        command.Parameters["@senti_magnitude"].Value = entity.senti_magnitude;
+
+        command.Parameters.Add("@senti_salience", SqlDbType.Decimal);
+        command.Parameters["@senti_salience"].Precision = 38;
+        command.Parameters["@senti_salience"].Scale = 19;
+        command.Parameters["@senti_salience"].Value = entity.senti_salience;
+
+        command.Parameters.Add("@sentiment_id", SqlDbType.Int).Value = entity.sentiment_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = command.ExecuteNonQuery();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+
+        return statusCode;
     }
 
     public int addEntity(Entities entity)
     {
-        throw new NotImplementedException();
+        int statusCode = -1;
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "INSERT INTO Entities (name, category_type, senti_score, senti_magnitude, senti_salience, sentiment_id) " +
+                       "OUTPUT INSERTED.entity_id " +
+                       "VALUES (@name, @category_type, @senti_score, @senti_magnitude, @senti_salience, @sentiment_id);";
+
+        SqlCommand command = new SqlCommand(query);
+        command.Parameters.Add("@name", SqlDbType.VarChar, -1).Value = entity.name;
+        command.Parameters.Add("@category_type", SqlDbType.VarChar, -1).Value = entity.category_type;
+
+        command.Parameters.Add("@senti_score", SqlDbType.Decimal);
+        command.Parameters["@senti_score"].Precision = 38;
+        command.Parameters["@senti_score"].Scale = 19;
+        command.Parameters["@senti_score"].Value = entity.senti_score;
+
+        command.Parameters.Add("@senti_magnitude", SqlDbType.Decimal);
+        command.Parameters["@senti_magnitude"].Precision = 38;
+        command.Parameters["@senti_magnitude"].Scale = 19;
+        command.Parameters["@senti_magnitude"].Value = entity.senti_magnitude;
+
+        command.Parameters.Add("@senti_salience", SqlDbType.Decimal);
+        command.Parameters["@senti_salience"].Precision = 38;
+        command.Parameters["@senti_salience"].Scale = 19;
+        command.Parameters["@senti_salience"].Value = entity.senti_salience;
+
+        command.Parameters.Add("@sentiment_id", SqlDbType.Int).Value = entity.sentiment_id;
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            statusCode = (Int32)command.ExecuteScalar();
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return statusCode;
     }
 
     public int deleteEntity(int entity_id)
@@ -680,6 +921,7 @@ public class Service : IService
 
     public string[] refreshDBData()
     {
+        //Needs to comply with Poppi act so it must clear people after a certain amount of time
         throw new NotImplementedException();
     }
 

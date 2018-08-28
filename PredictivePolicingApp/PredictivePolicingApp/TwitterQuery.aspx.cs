@@ -45,7 +45,7 @@ namespace PredictivePolicingApp
             {
                 queryFeed.InnerHtml += /*"<div class='col-lg-4 mb-4 bg-default'>" +*/
                                         "<div class='card'>" +
-                                            "<div class='card-header'>Recieved At: " + DateTime.Now + "</div>" +
+                                            "<div class='card-header'>Received At: " + DateTime.Now + "</div>" +
                                                 "<div class='card-block'>" +
                                                     "<p>" + text + "</p>" +
                                                 "</div>" +
