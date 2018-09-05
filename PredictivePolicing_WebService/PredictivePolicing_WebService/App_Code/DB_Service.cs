@@ -258,6 +258,21 @@ public class Service : IService
         return statusCode;
     }
 
+    public int addCrimeTweets(List<CrimeTweets> crime_tweets)
+    {
+        int statusCode = -1;
+        foreach(CrimeTweets crimeTweet in crime_tweets)
+        {
+            statusCode = addCrimeTweet(crimeTweet);
+            if(statusCode < 0)
+            {
+                break;
+            }
+        }
+
+        return statusCode;
+    }
+
     public int deleteCrimeTweet(int tweet_id)
     {
         int statusCode = -1;

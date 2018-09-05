@@ -84,6 +84,7 @@
     <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -137,6 +138,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\GuestGeek_DBService\DB_Service.disco" />
+    <None Include="Connected Services\GuestGeek_DBService\configuration91.svcinfo" />
+    <None Include="Connected Services\GuestGeek_DBService\configuration.svcinfo" />
+    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.CompositeType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.CrimeTweets.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.Entities.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.Sentiments.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.SVM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\GuestGeek_DBService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
     <Content Include="css\bootstrap-reboot.css" />
@@ -162,6 +185,11 @@
     <Compile Include="Code\Twitter\Query.cs" />
     <Compile Include="Code\Twitter\Stream.cs" />
     <Compile Include="Code\Twitter\Throttle.cs" />
+    <Compile Include="Connected Services\GuestGeek_DBService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -203,6 +231,19 @@
     <Content Include="js\bootstrap.bundle.min.js.map" />
     <Content Include="js\bootstrap.js.map" />
     <Content Include="js\bootstrap.min.js.map" />
+    <None Include="Connected Services\GuestGeek_DBService\DB_Service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GuestGeek_DBService\DB_Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GuestGeek_DBService\DB_Service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GuestGeek_DBService\DB_Service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GuestGeek_DBService\Service.wsdl" />
     <None Include="packages.config" />
     <Content Include="Policing_Master.Master" />
     <None Include="Web.Debug.config">
@@ -211,6 +252,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GuestGeek_DBService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

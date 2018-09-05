@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Tweetinvi;
 using Tweetinvi.Models;
+using Tweetinvi.Models.Entities;
 using Tweetinvi.Parameters;
 
 namespace PredictivePolicingApp.Code.Twitter
@@ -28,7 +29,7 @@ namespace PredictivePolicingApp.Code.Twitter
             }
         }
 
-        public static List<String> Search_SearchTweet(String keyword)
+        public static List<GuestGeek_DBService.CrimeTweets> Search_SearchTweet(String keyword)
         {
             checkHasSetUserCred();
             var searchParameter = Search.CreateTweetSearchParameter(keyword);
@@ -46,6 +47,9 @@ namespace PredictivePolicingApp.Code.Twitter
 
             var tweets = Search.SearchTweets(searchParameter);
             List<String> tweetText = new List<String>();
+
+            List<GuestGeek_DBService.CrimeTweets> crimeTweets = new List<GuestGeek_DBService.CrimeTweets>();
+
             if (tweets == null)
             {
                 tweetText.Add(ExceptionHandler.GetLastException().TwitterDescription);
@@ -55,9 +59,55 @@ namespace PredictivePolicingApp.Code.Twitter
                 foreach (var tweet in tweets)
                 {
                     tweetText.Add(tweet.Text);
+                    GuestGeek_DBService.CrimeTweets myTweet = new GuestGeek_DBService.CrimeTweets();
+                    myTweet.message = tweet.Text;
+
+                    ICoordinates newCood = tweet.Coordinates;
+                    if(newCood == null)
+                    {
+                        myTweet.latitude = -1;
+                        myTweet.longitude = -1;
+                    }
+                    else
+                    {
+                        myTweet.latitude = newCood.Latitude;
+                        myTweet.longitude = newCood.Longitude;
+                    }
+
+                    IPlace newPlace = tweet.Place;
+                    if(newPlace == null)
+                    {
+                        myTweet.location = "Not provided";
+                    }
+                    else
+                    {
+                        myTweet.location = tweet.Place.Name;
+                    }
+
+
+                    myTweet.post_datetime = tweet.CreatedAt;
+                    myTweet.recieved_datetime = DateTime.Now;
+                    myTweet.twitter_handle = tweet.Prefix;
+                    myTweet.weather = "Needs to be Analysed";
+                    List<IUserMentionEntity> myMention = tweet.UserMentions;
+                    myTweet.mentions = "";
+                    foreach (IUserMentionEntity ent in myMention)
+                    {
+                        if (myTweet.mentions.Length != 0)
+                        {
+                            myTweet.mentions += " ";
+                        }
+                        myTweet.mentions += ent.ScreenName;
+                    }
+                    myTweet.tags = "Needs to be analysed";
+                    crimeTweets.Add(myTweet);
                 }
+                
             }
-            return tweetText;
+            GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
+
+            service.addCrimeTweets(crimeTweets);
+            return crimeTweets;
         }
     }
 }

@@ -36,6 +36,9 @@ public interface IService
     int addCrimeTweet(CrimeTweets crime_tweet);
 
     [OperationContract]
+    int addCrimeTweets(List<CrimeTweets> crime_tweets);
+
+    [OperationContract]
     int deleteCrimeTweet(int tweet_id);
 
     //---------------------------------------- SVM -----------------------------------------------------

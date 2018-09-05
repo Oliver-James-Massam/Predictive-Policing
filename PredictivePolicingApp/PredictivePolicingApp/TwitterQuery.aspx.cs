@@ -39,15 +39,16 @@ namespace PredictivePolicingApp
                 keyword = "Crime";
             }
 
-            List<String> tweetQuery = Query.Search_SearchTweet(keyword);
-            
-            foreach (String text in tweetQuery)
+            List<GuestGeek_DBService.CrimeTweets> tweetQuery = Query.Search_SearchTweet(keyword);
+            GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
+
+            foreach (GuestGeek_DBService.CrimeTweets tweet in tweetQuery)
             {
                 queryFeed.InnerHtml += /*"<div class='col-lg-4 mb-4 bg-default'>" +*/
                                         "<div class='card'>" +
-                                            "<div class='card-header'>Recieved At: " + DateTime.Now + "</div>" +
+                                            "<div class='card-header'>Received At: " + DateTime.Now + "</div>" +
                                                 "<div class='card-block'>" +
-                                                    "<p>" + text + "</p>" +
+                                                    "<p>" + tweet.message + "</p>" +
                                                 "</div>" +
                                         //"</div>" +
                                         "</div>";

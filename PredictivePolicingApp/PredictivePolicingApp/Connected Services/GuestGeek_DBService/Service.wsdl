@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:65172/DB_Service.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:65172/DB_Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:65172/DB_Service.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/" />
+      <xsd:import schemaLocation="http://localhost:65172/DB_Service.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService_GetData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetData" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_TestConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnection" />
+  </wsdl:message>
+  <wsdl:message name="IService_TestConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestConnectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetDataUsingDataContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetDataUsingDataContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_getCrimeTweets_InputMessage">
+    <wsdl:part name="parameters" element="tns:getCrimeTweets" />
+  </wsdl:message>
+  <wsdl:message name="IService_getCrimeTweets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getCrimeTweetsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_getCrimeTweet_InputMessage">
+    <wsdl:part name="parameters" element="tns:getCrimeTweet" />
+  </wsdl:message>
+  <wsdl:message name="IService_getCrimeTweet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getCrimeTweetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_setCrimeTweet_InputMessage">
+    <wsdl:part name="parameters" element="tns:setCrimeTweet" />
+  </wsdl:message>
+  <wsdl:message name="IService_setCrimeTweet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:setCrimeTweetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_addCrimeTweet_InputMessage">
+    <wsdl:part name="parameters" element="tns:addCrimeTweet" />
+  </wsdl:message>
+  <wsdl:message name="IService_addCrimeTweet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addCrimeTweetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_addCrimeTweets_InputMessage">
+    <wsdl:part name="parameters" element="tns:addCrimeTweets" />
+  </wsdl:message>
+  <wsdl:message name="IService_addCrimeTweets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addCrimeTweetsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_deleteCrimeTweet_InputMessage">
+    <wsdl:part name="parameters" element="tns:deleteCrimeTweet" />
+  </wsdl:message>
+  <wsdl:message name="IService_deleteCrimeTweet_OutputMessage">
+    <wsdl:part name="parameters" element="tns:deleteCrimeTweetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_getSVMs_InputMessage">
+    <wsdl:part name="parameters" element="tns:getSVMs" />
+  </wsdl:message>
+  <wsdl:message name="IService_getSVMs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getSVMsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_getSVM_InputMessage">
+    <wsdl:part name="parameters" element="tns:getSVM" />
+  </wsdl:message>
+  <wsdl:message name="IService_getSVM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getSVMResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_setSVM_InputMessage">
+    <wsdl:part name="parameters" element="tns:setSVM" />
+  </wsdl:message>
+  <wsdl:message name="IService_setSVM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:setSVMResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_addSVM_InputMessage">
+    <wsdl:part name="parameters" element="tns:addSVM" />
+  </wsdl:message>
+  <wsdl:message name="IService_addSVM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addSVMResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_deleteSVM_InputMessage">
+    <wsdl:part name="parameters" element="tns:deleteSVM" />
+  </wsdl:message>
+  <wsdl:message name="IService_deleteSVM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:deleteSVMResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_getSentiments_InputMessage">
+    <wsdl:part name="parameters" element="tns:getSentiments" />
+  </wsdl:message>
+  <wsdl:message name="IService_getSentiments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getSentimentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_getSentiment_InputMessage">
+    <wsdl:part name="parameters" element="tns:getSentiment" />
+  </wsdl:message>
+  <wsdl:message name="IService_getSentiment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getSentimentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_setSentiment_InputMessage">
+    <wsdl:part name="parameters" element="tns:setSentiment" />
+  </wsdl:message>
+  <wsdl:message name="IService_setSentiment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:setSentimentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_addSentiment_InputMessage">
+    <wsdl:part name="parameters" element="tns:addSentiment" />
+  </wsdl:message>
+  <wsdl:message name="IService_addSentiment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addSentimentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_deleteSentiment_InputMessage">
+    <wsdl:part name="parameters" element="tns:deleteSentiment" />
+  </wsdl:message>
+  <wsdl:message name="IService_deleteSentiment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:deleteSentimentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_getEntities_InputMessage">
+    <wsdl:part name="parameters" element="tns:getEntities" />
+  </wsdl:message>
+  <wsdl:message name="IService_getEntities_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getEntitiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_getEntity_InputMessage">
+    <wsdl:part name="parameters" element="tns:getEntity" />
+  </wsdl:message>
+  <wsdl:message name="IService_getEntity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getEntityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_setEntity_InputMessage">
+    <wsdl:part name="parameters" element="tns:setEntity" />
+  </wsdl:message>
+  <wsdl:message name="IService_setEntity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:setEntityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_addEntity_InputMessage">
+    <wsdl:part name="parameters" element="tns:addEntity" />
+  </wsdl:message>
+  <wsdl:message name="IService_addEntity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addEntityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_deleteEntity_InputMessage">
+    <wsdl:part name="parameters" element="tns:deleteEntity" />
+  </wsdl:message>
+  <wsdl:message name="IService_deleteEntity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:deleteEntityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_refreshDBData_InputMessage">
+    <wsdl:part name="parameters" element="tns:refreshDBData" />
+  </wsdl:message>
+  <wsdl:message name="IService_refreshDBData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:refreshDBDataResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService">
+    <wsdl:operation name="GetData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetData" message="tns:IService_GetData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetDataResponse" message="tns:IService_GetData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TestConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/TestConnection" message="tns:IService_TestConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/TestConnectionResponse" message="tns:IService_TestConnection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataUsingDataContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetDataUsingDataContract" message="tns:IService_GetDataUsingDataContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetDataUsingDataContractResponse" message="tns:IService_GetDataUsingDataContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getCrimeTweets">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getCrimeTweets" message="tns:IService_getCrimeTweets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getCrimeTweetsResponse" message="tns:IService_getCrimeTweets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getCrimeTweet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getCrimeTweet" message="tns:IService_getCrimeTweet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getCrimeTweetResponse" message="tns:IService_getCrimeTweet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="setCrimeTweet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/setCrimeTweet" message="tns:IService_setCrimeTweet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/setCrimeTweetResponse" message="tns:IService_setCrimeTweet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addCrimeTweet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/addCrimeTweet" message="tns:IService_addCrimeTweet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/addCrimeTweetResponse" message="tns:IService_addCrimeTweet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addCrimeTweets">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/addCrimeTweets" message="tns:IService_addCrimeTweets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/addCrimeTweetsResponse" message="tns:IService_addCrimeTweets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteCrimeTweet">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/deleteCrimeTweet" message="tns:IService_deleteCrimeTweet_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/deleteCrimeTweetResponse" message="tns:IService_deleteCrimeTweet_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getSVMs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getSVMs" message="tns:IService_getSVMs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getSVMsResponse" message="tns:IService_getSVMs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getSVM">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getSVM" message="tns:IService_getSVM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getSVMResponse" message="tns:IService_getSVM_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="setSVM">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/setSVM" message="tns:IService_setSVM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/setSVMResponse" message="tns:IService_setSVM_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addSVM">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/addSVM" message="tns:IService_addSVM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/addSVMResponse" message="tns:IService_addSVM_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteSVM">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/deleteSVM" message="tns:IService_deleteSVM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/deleteSVMResponse" message="tns:IService_deleteSVM_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getSentiments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getSentiments" message="tns:IService_getSentiments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getSentimentsResponse" message="tns:IService_getSentiments_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getSentiment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getSentiment" message="tns:IService_getSentiment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getSentimentResponse" message="tns:IService_getSentiment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="setSentiment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/setSentiment" message="tns:IService_setSentiment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/setSentimentResponse" message="tns:IService_setSentiment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addSentiment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/addSentiment" message="tns:IService_addSentiment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/addSentimentResponse" message="tns:IService_addSentiment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteSentiment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/deleteSentiment" message="tns:IService_deleteSentiment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/deleteSentimentResponse" message="tns:IService_deleteSentiment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getEntities">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getEntities" message="tns:IService_getEntities_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getEntitiesResponse" message="tns:IService_getEntities_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getEntity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/getEntity" message="tns:IService_getEntity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/getEntityResponse" message="tns:IService_getEntity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="setEntity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/setEntity" message="tns:IService_setEntity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/setEntityResponse" message="tns:IService_setEntity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addEntity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/addEntity" message="tns:IService_addEntity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/addEntityResponse" message="tns:IService_addEntity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteEntity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/deleteEntity" message="tns:IService_deleteEntity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/deleteEntityResponse" message="tns:IService_deleteEntity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="refreshDBData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/refreshDBData" message="tns:IService_refreshDBData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/refreshDBDataResponse" message="tns:IService_refreshDBData_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetData">
+      <soap:operation soapAction="http://tempuri.org/IService/GetData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestConnection">
+      <soap:operation soapAction="http://tempuri.org/IService/TestConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataUsingDataContract">
+      <soap:operation soapAction="http://tempuri.org/IService/GetDataUsingDataContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCrimeTweets">
+      <soap:operation soapAction="http://tempuri.org/IService/getCrimeTweets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCrimeTweet">
+      <soap:operation soapAction="http://tempuri.org/IService/getCrimeTweet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setCrimeTweet">
+      <soap:operation soapAction="http://tempuri.org/IService/setCrimeTweet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addCrimeTweet">
+      <soap:operation soapAction="http://tempuri.org/IService/addCrimeTweet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addCrimeTweets">
+      <soap:operation soapAction="http://tempuri.org/IService/addCrimeTweets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCrimeTweet">
+      <soap:operation soapAction="http://tempuri.org/IService/deleteCrimeTweet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSVMs">
+      <soap:operation soapAction="http://tempuri.org/IService/getSVMs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSVM">
+      <soap:operation soapAction="http://tempuri.org/IService/getSVM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setSVM">
+      <soap:operation soapAction="http://tempuri.org/IService/setSVM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSVM">
+      <soap:operation soapAction="http://tempuri.org/IService/addSVM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteSVM">
+      <soap:operation soapAction="http://tempuri.org/IService/deleteSVM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentiments">
+      <soap:operation soapAction="http://tempuri.org/IService/getSentiments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSentiment">
+      <soap:operation soapAction="http://tempuri.org/IService/getSentiment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setSentiment">
+      <soap:operation soapAction="http://tempuri.org/IService/setSentiment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSentiment">
+      <soap:operation soapAction="http://tempuri.org/IService/addSentiment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteSentiment">
+      <soap:operation soapAction="http://tempuri.org/IService/deleteSentiment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEntities">
+      <soap:operation soapAction="http://tempuri.org/IService/getEntities" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEntity">
+      <soap:operation soapAction="http://tempuri.org/IService/getEntity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setEntity">
+      <soap:operation soapAction="http://tempuri.org/IService/setEntity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addEntity">
+      <soap:operation soapAction="http://tempuri.org/IService/addEntity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteEntity">
+      <soap:operation soapAction="http://tempuri.org/IService/deleteEntity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="refreshDBData">
+      <soap:operation soapAction="http://tempuri.org/IService/refreshDBData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="BasicHttpBinding_IService" binding="tns:BasicHttpBinding_IService">
+      <soap:address location="http://localhost:65172/DB_Service.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

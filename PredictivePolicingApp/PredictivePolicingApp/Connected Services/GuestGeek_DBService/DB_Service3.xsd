@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:65172/DB_Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="CompositeType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BoolValue" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StringValue" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CompositeType" nillable="true" type="tns:CompositeType" />
+  <xs:complexType name="ArrayOfCrimeTweets">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CrimeTweets" type="tns:CrimeTweets" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCrimeTweets" nillable="true" type="tns:ArrayOfCrimeTweets" />
+  <xs:complexType name="CrimeTweets">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="latitude" type="xs:double" />
+      <xs:element minOccurs="0" name="location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="longitude" type="xs:double" />
+      <xs:element minOccurs="0" name="mentions" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="post_datetime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="recieved_datetime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="tags" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="tweet_id" type="xs:int" />
+      <xs:element minOccurs="0" name="twitter_handle" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="weather" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CrimeTweets" nillable="true" type="tns:CrimeTweets" />
+  <xs:complexType name="ArrayOfSVM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SVM" type="tns:SVM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSVM" nillable="true" type="tns:ArrayOfSVM" />
+  <xs:complexType name="SVM">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="alphas" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="kernal" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="label" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="support_vectors" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sv_id" type="xs:int" />
+      <xs:element minOccurs="0" name="tweet_id" type="xs:int" />
+      <xs:element minOccurs="0" name="weighted_sums" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SVM" nillable="true" type="tns:SVM" />
+  <xs:complexType name="ArrayOfSentiments">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Sentiments" type="tns:Sentiments" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSentiments" nillable="true" type="tns:ArrayOfSentiments" />
+  <xs:complexType name="Sentiments">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="category_primary" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="key_phrases" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sentiment_id" type="xs:int" />
+      <xs:element minOccurs="0" name="sentiment_total" type="xs:double" />
+      <xs:element minOccurs="0" name="tweet_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Sentiments" nillable="true" type="tns:Sentiments" />
+  <xs:complexType name="ArrayOfEntities">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Entities" type="tns:Entities" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEntities" nillable="true" type="tns:ArrayOfEntities" />
+  <xs:complexType name="Entities">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="category_type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="entity_id" type="xs:int" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="senti_magnitude" type="xs:double" />
+      <xs:element minOccurs="0" name="senti_salience" type="xs:double" />
+      <xs:element minOccurs="0" name="senti_score" type="xs:double" />
+      <xs:element minOccurs="0" name="sentiment_id" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Entities" nillable="true" type="tns:Entities" />
+</xs:schema>
