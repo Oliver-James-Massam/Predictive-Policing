@@ -43,7 +43,7 @@ public interface IService
 
     //---------------------------------------- SVM -----------------------------------------------------
     [OperationContract]
-    SVM[] getSVMs();
+    List<SVM> getSVMs();
 
     [OperationContract]
     SVM getSVM(int sv_id);
@@ -59,7 +59,7 @@ public interface IService
 
     //---------------------------------------- Sentiments -----------------------------------------------------
     [OperationContract]
-    Sentiments[] getSentiments();
+    List<Sentiments> getSentiments();
 
     [OperationContract]
     Sentiments getSentiment(int sentiment_id);
@@ -75,7 +75,7 @@ public interface IService
 
     //---------------------------------------- Entities -----------------------------------------------------
     [OperationContract]
-    Entities[] getEntities();
+    List<Entities> getEntities();
 
     [OperationContract]
     Entities getEntity(int entity_id);
