@@ -679,6 +679,21 @@ public class Service : IService
         return statusCode;
     }
 
+    public int addSentiments(List<Sentiments> sentiments)
+    {
+        int statusCode = -1;
+        foreach (Sentiments senti in sentiments)
+        {
+            statusCode = addSentiment(senti);
+            if (statusCode < 0)
+            {
+                break;
+            }
+        }
+
+        return statusCode;
+    }
+
     public int deleteSentiment(int sentiment_id)
     {
         int statusCode = -1;

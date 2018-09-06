@@ -1,4 +1,6 @@
-﻿using PredictivePolicingApp.Code.Twitter;
+﻿using PredictivePolicingApp.Code.Sentiment;
+using PredictivePolicingApp.Code.SentimentAnalysis;
+using PredictivePolicingApp.Code.Twitter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,30 +55,14 @@ namespace PredictivePolicingApp
                                         //"</div>" +
                                         "</div>";
             }
+            //Sentiment.processTweetSentiments(tweetQuery);
+            TextAnalytics newAnalysis = new TextAnalytics();
+            newAnalysis.fullAnalysis(tweetQuery);
         }
 
-        //private void searchQuery()
-        //{
-        //    var tokens = new Twitterizer.OAuthTokens
-        //    {
-        //        ConsumerKey = @"consumerKey",
-        //        ConsumerSecret = @"consumerSecret",
-        //        AccessToken = @"accessToken",
-        //        AccessTokenSecret = @"accessTokenSecret"
-        //    };
-
-        //    var response = Twitterizer.TwitterSearch.Search(tokens, "test",
-        //      new Twitterizer.SearchOptions
-        //      {
-        //          GeoCode = "51.50788772102843,-0.102996826171875,50mi"
-        //      });
-        //    if (response.Result != Twitterizer.RequestResult.Success)
-        //        return;
-
-        //    foreach (var status in response.ResponseObject)
-        //    {
-        //        Console.WriteLine(status.Text);
-        //    }
-        //}
+        private void searchQuery()
+        {
+            
+        }
     }
 }

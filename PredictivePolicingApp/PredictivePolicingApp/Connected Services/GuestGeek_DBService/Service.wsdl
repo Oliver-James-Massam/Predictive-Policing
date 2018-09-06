@@ -116,6 +116,12 @@
   <wsdl:message name="IService_addSentiment_OutputMessage">
     <wsdl:part name="parameters" element="tns:addSentimentResponse" />
   </wsdl:message>
+  <wsdl:message name="IService_addSentiments_InputMessage">
+    <wsdl:part name="parameters" element="tns:addSentiments" />
+  </wsdl:message>
+  <wsdl:message name="IService_addSentiments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:addSentimentsResponse" />
+  </wsdl:message>
   <wsdl:message name="IService_deleteSentiment_InputMessage">
     <wsdl:part name="parameters" element="tns:deleteSentiment" />
   </wsdl:message>
@@ -230,6 +236,10 @@
     <wsdl:operation name="addSentiment">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/addSentiment" message="tns:IService_addSentiment_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService/addSentimentResponse" message="tns:IService_addSentiment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="addSentiments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/addSentiments" message="tns:IService_addSentiments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/addSentimentsResponse" message="tns:IService_addSentiments_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="deleteSentiment">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/deleteSentiment" message="tns:IService_deleteSentiment_InputMessage" />
@@ -417,6 +427,15 @@
     </wsdl:operation>
     <wsdl:operation name="addSentiment">
       <soap:operation soapAction="http://tempuri.org/IService/addSentiment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSentiments">
+      <soap:operation soapAction="http://tempuri.org/IService/addSentiments" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

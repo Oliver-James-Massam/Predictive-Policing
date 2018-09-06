@@ -778,6 +778,12 @@ namespace PredictivePolicingApp.GuestGeek_DBService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/addSentiment", ReplyAction="http://tempuri.org/IService/addSentimentResponse")]
         System.Threading.Tasks.Task<int> addSentimentAsync(PredictivePolicingApp.GuestGeek_DBService.Sentiments sentiment);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/addSentiments", ReplyAction="http://tempuri.org/IService/addSentimentsResponse")]
+        int addSentiments(System.Collections.Generic.List<PredictivePolicingApp.GuestGeek_DBService.Sentiments> sentiments);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/addSentiments", ReplyAction="http://tempuri.org/IService/addSentimentsResponse")]
+        System.Threading.Tasks.Task<int> addSentimentsAsync(System.Collections.Generic.List<PredictivePolicingApp.GuestGeek_DBService.Sentiments> sentiments);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/deleteSentiment", ReplyAction="http://tempuri.org/IService/deleteSentimentResponse")]
         int deleteSentiment(int sentiment_id);
         
@@ -990,6 +996,14 @@ namespace PredictivePolicingApp.GuestGeek_DBService {
         
         public System.Threading.Tasks.Task<int> addSentimentAsync(PredictivePolicingApp.GuestGeek_DBService.Sentiments sentiment) {
             return base.Channel.addSentimentAsync(sentiment);
+        }
+        
+        public int addSentiments(System.Collections.Generic.List<PredictivePolicingApp.GuestGeek_DBService.Sentiments> sentiments) {
+            return base.Channel.addSentiments(sentiments);
+        }
+        
+        public System.Threading.Tasks.Task<int> addSentimentsAsync(System.Collections.Generic.List<PredictivePolicingApp.GuestGeek_DBService.Sentiments> sentiments) {
+            return base.Channel.addSentimentsAsync(sentiments);
         }
         
         public int deleteSentiment(int sentiment_id) {

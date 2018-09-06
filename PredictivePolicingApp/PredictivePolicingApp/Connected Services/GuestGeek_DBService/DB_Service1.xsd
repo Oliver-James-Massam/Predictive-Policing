@@ -246,6 +246,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="addSentiments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="sentiments" nillable="true" type="q16:ArrayOfSentiments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="addSentimentsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="addSentimentsResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="deleteSentiment">
     <xs:complexType>
       <xs:sequence>
@@ -268,7 +282,7 @@
   <xs:element name="getEntitiesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="getEntitiesResult" nillable="true" type="q16:ArrayOfEntities" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="getEntitiesResult" nillable="true" type="q17:ArrayOfEntities" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -282,14 +296,14 @@
   <xs:element name="getEntityResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="getEntityResult" type="q17:Entities" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="getEntityResult" type="q18:Entities" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="setEntity">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="entity" type="q18:Entities" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="entity" type="q19:Entities" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -303,7 +317,7 @@
   <xs:element name="addEntity">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="entity" type="q19:Entities" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="entity" type="q20:Entities" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -336,7 +350,7 @@
   <xs:element name="refreshDBDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="refreshDBDataResult" nillable="true" type="q20:ArrayOfstring" />
+        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="refreshDBDataResult" nillable="true" type="q21:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -71,6 +71,9 @@ public interface IService
     int addSentiment(Sentiments sentiment);
 
     [OperationContract]
+    int addSentiments(List<Sentiments> sentiments);
+
+    [OperationContract]
     int deleteSentiment(int sentiment_id);
 
     //---------------------------------------- Entities -----------------------------------------------------
