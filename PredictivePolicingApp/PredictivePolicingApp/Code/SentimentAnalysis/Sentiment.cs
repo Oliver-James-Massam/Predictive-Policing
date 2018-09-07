@@ -16,6 +16,8 @@ using System.Net.Http;
 using System.Threading;
 using Microsoft.Azure.CognitiveServices.Language.TextAnalytics;
 using PredictivePolicingApp.Code.Misc;
+using System.Diagnostics;
+using edu.stanford.nlp.simple;
 
 namespace PredictivePolicingApp.Code.Sentiment
 {
@@ -62,6 +64,9 @@ namespace PredictivePolicingApp.Code.Sentiment
 
         public static void buildPipeline(string text)
         {//https://interviewbubble.com/getting-started-with-stanford-corenlp-a-stanford-corenlp-tutorial/
+
+            // Path to the folder with models extracted from `stanford-corenlp-3.7.0-models.jar`
+            var jarRoot = @"..\..\..\..\data\paket-files\nlp.stanford.edu\stanford-corenlp-full-2016-10-31\models";
             // creates a StanfordCoreNLP object, with POS tagging, lemmatization,
             // NER, parsing, and coreference resolution
             Properties props = new Properties();
@@ -74,8 +79,13 @@ namespace PredictivePolicingApp.Code.Sentiment
             // run all Annotators on this text
             pipeline.annotate(document);
             //Finished processing the document here
-
-
+            // Result - Pretty Print
+            using (var stream = new ByteArrayOutputStream())
+            {
+                pipeline.prettyPrint(document, new PrintWriter(stream));
+                Debug.WriteLine(stream.toString());
+                stream.close();
+            }
         }
 
         public static List<GuestGeek_DBService.Sentiments> processTweetSentiments(List<GuestGeek_DBService.CrimeTweets> crimeTweets)
@@ -101,6 +111,11 @@ namespace PredictivePolicingApp.Code.Sentiment
             return mySentiments;
         }
         
-
+        public static void Test(string tester)
+        {
+            var sanit = sanitize(tester);
+            Sentence sentence = new Sentence(sanit);
+            Debug.WriteLine(sentence.sentiment() + ""+ " ");
+        }
     }
 }

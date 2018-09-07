@@ -146,6 +146,9 @@
     <Reference Include="jollyday, Version=0.4.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stanford.NLP.CoreNLP.3.9.1.0\lib\jollyday.dll</HintPath>
     </Reference>
+    <Reference Include="LibSVMsharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\LibSVMsharp.1.2.4\lib\net45\LibSVMsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.CognitiveServices.Language.TextAnalytics, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.CognitiveServices.Language.TextAnalytics.2.1.0-preview\lib\net452\Microsoft.Azure.CognitiveServices.Language.TextAnalytics.dll</HintPath>
     </Reference>
@@ -173,6 +176,9 @@
     </Reference>
     <Reference Include="protobuf, Version=2.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stanford.NLP.CoreNLP.3.9.1.0\lib\protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleNetNlp, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleNetNlp.3.8.0\lib\SimpleNetNlp.dll</HintPath>
     </Reference>
     <Reference Include="slf4j-api, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stanford.NLP.CoreNLP.3.9.1.0\lib\slf4j-api.dll</HintPath>
@@ -300,7 +306,46 @@
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="libsvm.dll" />
+    <Content Include="nlp-libs\ejml-0.23.dll" />
+    <Content Include="nlp-libs\IKVM.AWT.WinForms.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Beans.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Charsets.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Cldrdata.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Corba.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Core.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Jdbc.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Localedata.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Management.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Media.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Misc.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Naming.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Nashorn.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Remoting.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Security.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.SwingAWT.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Text.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Tools.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Util.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.API.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.Bind.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.Crypto.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.Parse.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.Transform.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.WebServices.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.XPath.dll" />
+    <Content Include="nlp-libs\IKVM.Runtime.dll" />
+    <Content Include="nlp-libs\IKVM.Runtime.JNI.dll" />
+    <Content Include="nlp-libs\javax.json.dll" />
+    <Content Include="nlp-libs\joda-time.dll" />
+    <Content Include="nlp-libs\jollyday.dll" />
+    <Content Include="nlp-libs\protobuf.dll" />
+    <Content Include="nlp-libs\slf4j-api.dll" />
+    <Content Include="nlp-libs\slf4j-simple.dll" />
+    <Content Include="nlp-libs\stanford-corenlp-3.8.0.dll" />
+    <Content Include="nlp-libs\xom.dll" />
     <Content Include="SentimentAnalysis.aspx" />
+    <Content Include="SVM.aspx" />
     <Content Include="TwitterQuery.aspx" />
     <Content Include="TwitterStream.aspx" />
     <Content Include="WeatherAnalysis.aspx" />
@@ -339,6 +384,13 @@
     </Compile>
     <Compile Include="SentimentAnalysis.aspx.designer.cs">
       <DependentUpon>SentimentAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SVM.aspx.cs">
+      <DependentUpon>SVM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SVM.aspx.designer.cs">
+      <DependentUpon>SVM.aspx</DependentUpon>
     </Compile>
     <Compile Include="TwitterQuery.aspx.cs">
       <DependentUpon>TwitterQuery.aspx</DependentUpon>
@@ -386,6 +438,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GuestGeek_DBService\Service.wsdl" />
+    <Content Include="LIBSVM_COPYRIGHT" />
     <None Include="packages.config" />
     <Content Include="Policing_Master.Master" />
     <None Include="Web.Debug.config">
@@ -432,7 +485,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\SimpleNetNlp.3.8.0\build\SimpleNetNlp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SimpleNetNlp.3.8.0\build\SimpleNetNlp.targets'))" />
   </Target>
+  <Import Project="..\packages\SimpleNetNlp.3.8.0\build\SimpleNetNlp.targets" Condition="Exists('..\packages\SimpleNetNlp.3.8.0\build\SimpleNetNlp.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

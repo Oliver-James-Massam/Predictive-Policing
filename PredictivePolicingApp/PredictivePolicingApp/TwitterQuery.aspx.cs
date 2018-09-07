@@ -56,8 +56,9 @@ namespace PredictivePolicingApp
                                         "</div>";
             }
             //Sentiment.processTweetSentiments(tweetQuery);
+            //Sentiment.Test("I cant believe that Jane Killed someone in Johannesburg");
             TextAnalytics newAnalysis = new TextAnalytics();
-            newAnalysis.fullAnalysis(tweetQuery);
+            newAnalysis.extractingLanguage(tweetQuery);
         }
 
         private void searchQuery()

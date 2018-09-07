@@ -124,22 +124,21 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
         //    var client = new HttpClient();
         //    var queryString = HttpUtility.ParseQueryString(string.Empty);
 
-        //    Request headers
-        //    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "{subscription key}");
+        //    // Request headers
+        //    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", TwitterKeys.getTextAnalyticsKey());
 
-        //    var uri = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0" + queryString;
+        //    var uri = "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/languages?" + queryString;
 
         //    HttpResponseMessage response;
 
-        //    Request body
+        //    // Request body
         //    byte[] byteData = Encoding.UTF8.GetBytes("{body}");
 
         //    using (var content = new ByteArrayContent(byteData))
         //    {
-        //        content.Headers.ContentType = new MediaTypeHeaderValue("< your content type, i.e. application/json >");
+        //        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
         //        response = await client.PostAsync(uri, content);
         //    }
-
         //}
 
         public List<SentimentResults> fullAnalysis(List<GuestGeek_DBService.CrimeTweets> crimeTweets)
@@ -166,7 +165,8 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
             LanguageBatchResult result = null;
             try
             {
-                result = client.DetectLanguageAsync(new BatchInput(myInp)).Result;
+                //result = client.DetectLanguageAsync(new BatchInput(myInp)).Result;
+                Task.Run(() => client.DetectLanguageAsync(new BatchInput(myInp)).Result).Wait();
             }
             catch (AggregateException aex)
             {
