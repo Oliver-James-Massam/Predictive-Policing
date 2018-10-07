@@ -41,12 +41,12 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
             public double senti_score;
         }
 
-        public List<SentimentResults> extractingLanguage(List<GuestGeek_DBService.CrimeTweets> crimeTweets)
+        public List<SentimentResults> extractingLanguage(List<HonoursTestProject.GuestGeek_DBService.CrimeTweets> crimeTweets)
         {
             // Create a client.---------------------------------------------------------------------------------------------------------------------------------
             ITextAnalyticsClient client = new TextAnalyticsClient(new ApiKeyServiceClientCredentials())
             {
-                Endpoint = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/"
+                Endpoint = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0"
             };
 
             System.Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -54,13 +54,13 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
             Console.WriteLine("===== LANGUAGE EXTRACTION ======");
 
             List<Input> myInp = new List<Input>();
-            foreach (GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            foreach (HonoursTestProject.GuestGeek_DBService.CrimeTweets ct in crimeTweets)
             {
                 Input inp = new Input(ct.tweet_id.ToString(), ct.message);
                 myInp.Add(inp);
             }
 
-            var result = client.DetectLanguageAsync(new BatchInput(myInp)).Result;
+            LanguageBatchResult result = client.DetectLanguageAsync(new BatchInput(myInp)).Result;
 
             // Printing language results.
             List<SentimentResults> tweetLangs = new List<SentimentResults>();
@@ -81,7 +81,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
         //    // Create a client.---------------------------------------------------------------------------------------------------------------------------------
         //    ITextAnalyticsClient client = new TextAnalyticsClient(new ApiKeyServiceClientCredentials())
         //    {
-        //        Endpoint = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/"
+        //        Endpoint = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0"
         //    };
 
         //    System.Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -141,12 +141,12 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
         //    }
         //}
 
-        public List<SentimentResults> fullAnalysis(List<GuestGeek_DBService.CrimeTweets> crimeTweets)
+        public List<SentimentResults> fullAnalysis(List<HonoursTestProject.GuestGeek_DBService.CrimeTweets> crimeTweets)
         {
             // Create a client.---------------------------------------------------------------------------------------------------------------------------------
             ITextAnalyticsClient client = new TextAnalyticsClient(new ApiKeyServiceClientCredentials())
             {
-                Endpoint = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0/"
+                Endpoint = "https://westeurope.api.cognitive.microsoft.com/text/analytics/v2.0"
             };
 
             System.Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -155,7 +155,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
             Console.WriteLine("===== LANGUAGE EXTRACTION ======");
 
             List<Input> myInp = new List<Input>();//Languages
-            foreach (GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            foreach (HonoursTestProject.GuestGeek_DBService.CrimeTweets ct in crimeTweets)
             {
                 //Sentiment.Sentiment.sanitize(ct.message);
                 Input inp = new Input(ct.tweet_id.ToString(), ct.message);
@@ -198,7 +198,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
 
             List<MultiLanguageInput> keyPhrases = new List<MultiLanguageInput>();//Key phrases
             int count = 0;
-            foreach (GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            foreach (HonoursTestProject.GuestGeek_DBService.CrimeTweets ct in crimeTweets)
             {
                 string tempLang = tweetLangs.ElementAt<SentimentResults>(count).language_short;
                 MultiLanguageInput inp = new MultiLanguageInput(tempLang, ct.tweet_id.ToString(), ct.message);
@@ -235,7 +235,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
 
             List<MultiLanguageInput> sentiAni = new List<MultiLanguageInput>();//Sentiment Analysis
             count = 0;
-            foreach (GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            foreach (HonoursTestProject.GuestGeek_DBService.CrimeTweets ct in crimeTweets)
             {
                 string tempLang = tweetKeyPhrases.ElementAt<SentimentResults>(count).language_short;
                 MultiLanguageInput inp = new MultiLanguageInput(tempLang, ct.tweet_id.ToString(), ct.message);
@@ -259,10 +259,10 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
                 count++;
             }
 
-            List<GuestGeek_DBService.Sentiments> completeSentiments = new List<GuestGeek_DBService.Sentiments>();
+            List<HonoursTestProject.GuestGeek_DBService.Sentiments> completeSentiments = new List<HonoursTestProject.GuestGeek_DBService.Sentiments>();
             foreach(SentimentResults finalResults in tweetSentiments)
             {
-                GuestGeek_DBService.Sentiments newSenti = new GuestGeek_DBService.Sentiments();
+                HonoursTestProject.GuestGeek_DBService.Sentiments newSenti = new HonoursTestProject.GuestGeek_DBService.Sentiments();
                 newSenti.tweet_id = finalResults.tweet_id;
                 newSenti.sentiment_total = finalResults.senti_score;
                 newSenti.category_primary = finalResults.language + ", " + finalResults.language_short;
@@ -283,8 +283,10 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
                 }
                 completeSentiments.Add(newSenti);
             }
-            GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
-            service.addSentiments(completeSentiments);
+            HonoursTestProject.GuestGeek_DBService.Service service = new HonoursTestProject.GuestGeek_DBService.Service();
+            int outVar = 1000;
+            bool outBool = true;
+            service.addSentiments(completeSentiments.ToArray(),out outVar,out outBool);
             return tweetSentiments;
 
             // Linking entities---------------------------------------------------------------------------------------------------------------------------------
