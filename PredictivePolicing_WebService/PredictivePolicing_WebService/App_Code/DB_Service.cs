@@ -44,7 +44,7 @@ public class Service : IService
     private double getDoubleSafe(SqlDataReader reader, int index)
     {
         if (!reader.IsDBNull(index))
-            return reader.GetDouble(index);
+            return (double)reader.GetDecimal(index);
         return NULL_DOUBLE;
     }
 
@@ -76,9 +76,11 @@ public class Service : IService
             int weatherIndex = reader.GetOrdinal("weather");
             int mentionsIndex = reader.GetOrdinal("mentions");
             int tagsIndex = reader.GetOrdinal("tags");
-
-            while(reader.Read())
+            int limit = 100;
+            int currCount = 0;
+            while(reader.Read() && (currCount <= limit))
             {
+                currCount++;
                 CrimeTweets tweet = new CrimeTweets();
                 tweet.tweet_id = reader.GetInt32(tweetIDIndex);
                 tweet.message = reader.GetString(messageIndex);
@@ -538,7 +540,7 @@ public class Service : IService
             {
                 Sentiments sentiment = new Sentiments();
                 sentiment.sentiment_id = reader.GetInt32(sentiment_idIndex);
-                sentiment.sentiment_total = reader.GetDouble(sentiment_totalIndex);
+                sentiment.sentiment_total = (double)reader.GetDecimal(sentiment_totalIndex);
                 sentiment.category_primary = reader.GetString(category_primaryIndex);
                 sentiment.key_phrases = reader.GetString(key_phrasesIndex);
                 sentiment.tweet_id = reader.GetInt32(tweet_idIndex);
