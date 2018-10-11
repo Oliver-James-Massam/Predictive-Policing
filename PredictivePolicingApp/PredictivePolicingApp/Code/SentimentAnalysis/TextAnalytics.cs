@@ -26,7 +26,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
         {
             public override Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {
-                string key = TwitterKeys.getTextAnalyticsKey();
+                string key = TextAnalyticsKeys.getTextAnalyticsKey1();
                 request.Headers.Add("Ocp-Apim-Subscription-Key", key);
                 return base.ProcessHttpRequestAsync(request, cancellationToken);
             }
@@ -41,7 +41,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
             public double senti_score;
         }
 
-        public List<SentimentResults> extractingLanguage(List<GuestGeek_DBService.CrimeTweets> crimeTweets)
+        public List<SentimentResults> extractingLanguage(List<DB_Service.CrimeTweets> crimeTweets)
         {
             // Create a client.---------------------------------------------------------------------------------------------------------------------------------
             ITextAnalyticsClient client = new TextAnalyticsClient(new ApiKeyServiceClientCredentials())
@@ -54,7 +54,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
             Console.WriteLine("===== LANGUAGE EXTRACTION ======");
 
             List<Input> myInp = new List<Input>();
-            foreach (GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            foreach (DB_Service.CrimeTweets ct in crimeTweets)
             {
                 Input inp = new Input(ct.tweet_id.ToString(), ct.message);
                 myInp.Add(inp);
@@ -141,7 +141,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
         //    }
         //}
 
-        public List<SentimentResults> fullAnalysis(List<GuestGeek_DBService.CrimeTweets> crimeTweets)
+        public List<SentimentResults> fullAnalysis(List<DB_Service.CrimeTweets> crimeTweets)
         {
             // Create a client.---------------------------------------------------------------------------------------------------------------------------------
             ITextAnalyticsClient client = new TextAnalyticsClient(new ApiKeyServiceClientCredentials())
@@ -155,7 +155,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
             Console.WriteLine("===== LANGUAGE EXTRACTION ======");
 
             List<Input> myInp = new List<Input>();//Languages
-            foreach (GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            foreach (DB_Service.CrimeTweets ct in crimeTweets)
             {
                 //Sentiment.Sentiment.sanitize(ct.message);
                 Input inp = new Input(ct.tweet_id.ToString(), ct.message);
@@ -198,7 +198,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
 
             List<MultiLanguageInput> keyPhrases = new List<MultiLanguageInput>();//Key phrases
             int count = 0;
-            foreach (GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            foreach (DB_Service.CrimeTweets ct in crimeTweets)
             {
                 string tempLang = tweetLangs.ElementAt<SentimentResults>(count).language_short;
                 MultiLanguageInput inp = new MultiLanguageInput(tempLang, ct.tweet_id.ToString(), ct.message);
@@ -235,7 +235,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
 
             List<MultiLanguageInput> sentiAni = new List<MultiLanguageInput>();//Sentiment Analysis
             count = 0;
-            foreach (GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            foreach (DB_Service.CrimeTweets ct in crimeTweets)
             {
                 string tempLang = tweetKeyPhrases.ElementAt<SentimentResults>(count).language_short;
                 MultiLanguageInput inp = new MultiLanguageInput(tempLang, ct.tweet_id.ToString(), ct.message);
@@ -259,10 +259,10 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
                 count++;
             }
 
-            List<GuestGeek_DBService.Sentiments> completeSentiments = new List<GuestGeek_DBService.Sentiments>();
+            List<DB_Service.Sentiments> completeSentiments = new List<DB_Service.Sentiments>();
             foreach(SentimentResults finalResults in tweetSentiments)
             {
-                GuestGeek_DBService.Sentiments newSenti = new GuestGeek_DBService.Sentiments();
+                DB_Service.Sentiments newSenti = new DB_Service.Sentiments();
                 newSenti.tweet_id = finalResults.tweet_id;
                 newSenti.sentiment_total = finalResults.senti_score;
                 newSenti.category_primary = finalResults.language + ", " + finalResults.language_short;
@@ -283,7 +283,7 @@ namespace PredictivePolicingApp.Code.SentimentAnalysis
                 }
                 completeSentiments.Add(newSenti);
             }
-            GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
+            DB_Service.ServiceClient service = new DB_Service.ServiceClient();
             service.addSentiments(completeSentiments);
             return tweetSentiments;
 

@@ -40,6 +40,15 @@ namespace PredictivePolicingApp {
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtKeyword;
         
         /// <summary>
+        /// testPara control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl testPara;
+        
+        /// <summary>
         /// queryFeed control.
         /// </summary>
         /// <remarks>

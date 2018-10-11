@@ -41,10 +41,10 @@ namespace PredictivePolicingApp
                 keyword = "Crime";
             }
 
-            List<GuestGeek_DBService.CrimeTweets> tweetQuery = Query.Search_SearchTweet(keyword);
-            GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
+            List<DB_Service.CrimeTweets> tweetQuery = Query.Search_SearchTweet(keyword);
+            DB_Service.ServiceClient service = new DB_Service.ServiceClient();
 
-            foreach (GuestGeek_DBService.CrimeTweets tweet in tweetQuery)
+            foreach (DB_Service.CrimeTweets tweet in tweetQuery)
             {
                 queryFeed.InnerHtml += /*"<div class='col-lg-4 mb-4 bg-default'>" +*/
                                         "<div class='card'>" +
@@ -57,8 +57,20 @@ namespace PredictivePolicingApp
             }
             //Sentiment.processTweetSentiments(tweetQuery);
             //Sentiment.Test("I cant believe that Jane Killed someone in Johannesburg");
-            TextAnalytics newAnalysis = new TextAnalytics();
-            newAnalysis.extractingLanguage(tweetQuery);
+            //TextAnalyticsV2_1 newAnalysis = new TextAnalyticsV2_1();
+
+            DB_Service.CrimeTweets newTweet = service.getCrimeTweet(6);
+            List<DB_Service.CrimeTweets> newTweetList = new List<DB_Service.CrimeTweets>();
+            newTweetList.Add(newTweet);
+
+            List<SentimentResults> newResults = TextAnalyticsV2_1.analyseSentimentScore();
+            // Printing language results.
+            foreach (SentimentResults document in newResults)
+            {
+                testPara.InnerHtml += "Document ID: " + document.getTweet_id() + ", Score: " + document.getSenti_score() + "\n";
+                //Console.WriteLine("Document ID: {0} , Language: {1}", document.Id, document.DetectedLanguages[0].Name);
+            }
+            //TextAnalyticsV2_1.fullAnalysis(newTweets);
         }
 
         private void searchQuery()

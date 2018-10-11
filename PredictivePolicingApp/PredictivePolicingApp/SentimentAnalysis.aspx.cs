@@ -39,14 +39,14 @@ namespace PredictivePolicingApp
                                                         "</thead>" +
                                                         "<tbody>";
 
-            List<GuestGeek_DBService.Sentiments> sentiments = new List<GuestGeek_DBService.Sentiments>();
-            GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
+            List<DB_Service.Sentiments> sentiments = new List<DB_Service.Sentiments>();
+            DB_Service.ServiceClient service = new DB_Service.ServiceClient();
 
             sentiments = service.getSentiments();
 
             if(sentiments != null)
             {
-                foreach (GuestGeek_DBService.Sentiments senti in sentiments)
+                foreach (DB_Service.Sentiments senti in sentiments)
                 {
                     sentiResults.InnerHtml += "<tr>" +
                                                     "<td>" + senti.sentiment_id + "</td>" +

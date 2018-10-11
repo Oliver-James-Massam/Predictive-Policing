@@ -29,7 +29,7 @@ namespace PredictivePolicingApp.Code.Twitter
             }
         }
 
-        public static List<GuestGeek_DBService.CrimeTweets> Search_SearchTweet(String keyword)
+        public static List<DB_Service.CrimeTweets> Search_SearchTweet(String keyword)
         {
             checkHasSetUserCred();
             var searchParameter = Search.CreateTweetSearchParameter(keyword);
@@ -48,7 +48,7 @@ namespace PredictivePolicingApp.Code.Twitter
             var tweets = Search.SearchTweets(searchParameter);
             List<String> tweetText = new List<String>();
 
-            List<GuestGeek_DBService.CrimeTweets> crimeTweets = new List<GuestGeek_DBService.CrimeTweets>();
+            List<DB_Service.CrimeTweets> crimeTweets = new List<DB_Service.CrimeTweets>();
 
             if (tweets == null)
             {
@@ -59,7 +59,7 @@ namespace PredictivePolicingApp.Code.Twitter
                 foreach (var tweet in tweets)
                 {
                     tweetText.Add(tweet.Text);
-                    GuestGeek_DBService.CrimeTweets myTweet = new GuestGeek_DBService.CrimeTweets();
+                    DB_Service.CrimeTweets myTweet = new DB_Service.CrimeTweets();
                     myTweet.message = tweet.Text;
 
                     ICoordinates newCood = tweet.Coordinates;
@@ -104,13 +104,13 @@ namespace PredictivePolicingApp.Code.Twitter
                 }
                 
             }
-            GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
+            DB_Service.ServiceClient service = new DB_Service.ServiceClient();
 
             service.addCrimeTweets(crimeTweets);
             return crimeTweets;
         }
 
-        public static List<GuestGeek_DBService.CrimeTweets> Search_Tweet(String keyword)
+        public static List<DB_Service.CrimeTweets> Search_Tweet(String keyword)
         {
             checkHasSetUserCred();
             var searchParameter = Search.CreateTweetSearchParameter(keyword);
@@ -129,7 +129,7 @@ namespace PredictivePolicingApp.Code.Twitter
             var tweets = Search.SearchTweets(searchParameter);
             List<String> tweetText = new List<String>();
 
-            List<GuestGeek_DBService.CrimeTweets> crimeTweets = new List<GuestGeek_DBService.CrimeTweets>();
+            List<DB_Service.CrimeTweets> crimeTweets = new List<DB_Service.CrimeTweets>();
 
             if (tweets == null)
             {
@@ -140,7 +140,7 @@ namespace PredictivePolicingApp.Code.Twitter
                 foreach (var tweet in tweets)
                 {
                     tweetText.Add(tweet.Text);
-                    GuestGeek_DBService.CrimeTweets myTweet = new GuestGeek_DBService.CrimeTweets();
+                    DB_Service.CrimeTweets myTweet = new DB_Service.CrimeTweets();
                     myTweet.message = tweet.Text;
 
                     ICoordinates newCood = tweet.Coordinates;
@@ -186,7 +186,7 @@ namespace PredictivePolicingApp.Code.Twitter
                 }
 
             }
-            GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
+            DB_Service.ServiceClient service = new DB_Service.ServiceClient();
 
             service.addCrimeTweets(crimeTweets);
 

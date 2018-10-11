@@ -146,9 +146,6 @@
     <Reference Include="jollyday, Version=0.4.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Stanford.NLP.CoreNLP.3.9.1.0\lib\jollyday.dll</HintPath>
     </Reference>
-    <Reference Include="LibSVMsharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\packages\LibSVMsharp.1.2.4\lib\net45\LibSVMsharp.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Azure.CognitiveServices.Language.TextAnalytics, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.CognitiveServices.Language.TextAnalytics.2.1.0-preview\lib\net452\Microsoft.Azure.CognitiveServices.Language.TextAnalytics.dll</HintPath>
     </Reference>
@@ -268,25 +265,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\GuestGeek_DBService\DB_Service.disco" />
-    <None Include="Connected Services\GuestGeek_DBService\configuration91.svcinfo" />
-    <None Include="Connected Services\GuestGeek_DBService\configuration.svcinfo" />
-    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.CompositeType.datasource">
+    <None Include="Connected Services\DB_Service\DB_Service.disco" />
+    <None Include="Connected Services\DB_Service\configuration91.svcinfo" />
+    <None Include="Connected Services\DB_Service\configuration.svcinfo" />
+    <Content Include="Connected Services\DB_Service\PredictivePolicingApp.DB_Service.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.CrimeTweets.datasource">
+    <Content Include="Connected Services\DB_Service\PredictivePolicingApp.DB_Service.CrimeTweets.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.Entities.datasource">
+    <Content Include="Connected Services\DB_Service\PredictivePolicingApp.DB_Service.Entities.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.Sentiments.datasource">
+    <Content Include="Connected Services\DB_Service\PredictivePolicingApp.DB_Service.Sentiments.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Connected Services\GuestGeek_DBService\PredictivePolicingApp.GuestGeek_DBService.SVM.datasource">
+    <Content Include="Connected Services\DB_Service\PredictivePolicingApp.DB_Service.SVM.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Connected Services\GuestGeek_DBService\Reference.svcmap">
+    <None Include="Connected Services\DB_Service\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -306,7 +303,6 @@
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
-    <Content Include="libsvm.dll" />
     <Content Include="nlp-libs\ejml-0.23.dll" />
     <Content Include="nlp-libs\IKVM.AWT.WinForms.dll" />
     <Content Include="nlp-libs\IKVM.OpenJDK.Beans.dll" />
@@ -352,13 +348,16 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Misc\TextAnalyticsKeys.cs" />
     <Compile Include="Code\Misc\TwitterKeys.cs" />
     <Compile Include="Code\SentimentAnalysis\Sentiment.cs" />
+    <Compile Include="Code\SentimentAnalysis\SentimentResults.cs" />
     <Compile Include="Code\SentimentAnalysis\TextAnalytics.cs" />
+    <Compile Include="Code\SentimentAnalysis\TextAnalyticsV2_1.cs" />
     <Compile Include="Code\Twitter\Query.cs" />
     <Compile Include="Code\Twitter\TweetStream.cs" />
     <Compile Include="Code\Twitter\Throttle.cs" />
-    <Compile Include="Connected Services\GuestGeek_DBService\Reference.cs">
+    <Compile Include="Connected Services\DB_Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -425,20 +424,19 @@
     <Content Include="js\bootstrap.bundle.min.js.map" />
     <Content Include="js\bootstrap.js.map" />
     <Content Include="js\bootstrap.min.js.map" />
-    <None Include="Connected Services\GuestGeek_DBService\DB_Service.xsd">
+    <None Include="Connected Services\DB_Service\DB_Service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GuestGeek_DBService\DB_Service1.xsd">
+    <None Include="Connected Services\DB_Service\DB_Service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GuestGeek_DBService\DB_Service2.xsd">
+    <None Include="Connected Services\DB_Service\DB_Service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GuestGeek_DBService\DB_Service3.xsd">
+    <None Include="Connected Services\DB_Service\DB_Service3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GuestGeek_DBService\Service.wsdl" />
-    <Content Include="LIBSVM_COPYRIGHT" />
+    <None Include="Connected Services\DB_Service\Service.wsdl" />
     <None Include="packages.config" />
     <Content Include="Policing_Master.Master" />
     <None Include="Web.Debug.config">
@@ -452,7 +450,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\GuestGeek_DBService\" />
+    <WCFMetadataStorage Include="Connected Services\DB_Service\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

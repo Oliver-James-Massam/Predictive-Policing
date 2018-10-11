@@ -88,12 +88,12 @@ namespace PredictivePolicingApp.Code.Sentiment
             }
         }
 
-        public static List<GuestGeek_DBService.Sentiments> processTweetSentiments(List<GuestGeek_DBService.CrimeTweets> crimeTweets)
+        public static List<DB_Service.Sentiments> processTweetSentiments(List<DB_Service.CrimeTweets> crimeTweets)
         {
-            List<GuestGeek_DBService.Sentiments> mySentiments = new List<GuestGeek_DBService.Sentiments>();
-            foreach(GuestGeek_DBService.CrimeTweets ct in crimeTweets)
+            List<DB_Service.Sentiments> mySentiments = new List<DB_Service.Sentiments>();
+            foreach(DB_Service.CrimeTweets ct in crimeTweets)
             {
-                GuestGeek_DBService.Sentiments senti = new GuestGeek_DBService.Sentiments();
+                DB_Service.Sentiments senti = new DB_Service.Sentiments();
                 senti.sentiment_total = getCompoundTweetAnalysis(ct.message);
                 senti.category_primary = "To be Analysed";
                 senti.key_phrases = "To be Analysed";
@@ -103,7 +103,7 @@ namespace PredictivePolicingApp.Code.Sentiment
 
             if(mySentiments != null)
             {
-                GuestGeek_DBService.ServiceClient service = new GuestGeek_DBService.ServiceClient();
+                DB_Service.ServiceClient service = new DB_Service.ServiceClient();
 
                 service.addSentiments(mySentiments);
             }

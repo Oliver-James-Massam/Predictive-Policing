@@ -39,6 +39,9 @@
                                                 <label class="col-md-3 col-form-label">Keyword Query</label>
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text" name="placeholder" placeholder="Robbery" runat="server" id="txtKeyword">
+                                                    <br />
+                                                    <br />
+                                                    <pre id="testPara" runat="server"></pre>
                                                 </div>
                                             </div>
                                         </form>
