@@ -48,6 +48,64 @@ public class Service : IService
         return NULL_DOUBLE;
     }
 
+    //Get all tweets from last analysis in the database
+    public List<CrimeTweets> getCrimeTweetsToAnalyse()
+    {
+        List<CrimeTweets> tweets = new List<CrimeTweets>();
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "SELECT * FROM CrimeTweets WHERE tweet_id > " + getTextAnalyticsStartPoint();
+        SqlCommand command = new SqlCommand(query);
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            SqlDataReader reader = command.ExecuteReader();
+            //Column Indexs
+            int tweetIDIndex = reader.GetOrdinal("tweet_id");
+            int messageIndex = reader.GetOrdinal("message");
+            int latitudeIndex = reader.GetOrdinal("latitude");
+            int longitudeIndex = reader.GetOrdinal("longitude");
+            int locationIndex = reader.GetOrdinal("location");
+            int postDatetimeIndex = reader.GetOrdinal("post_datetime");
+            int recievedDatetimeIndex = reader.GetOrdinal("recieved_datetime");
+            int twitterHandleIndex = reader.GetOrdinal("twitter_handle");
+            int weatherIndex = reader.GetOrdinal("weather");
+            int mentionsIndex = reader.GetOrdinal("mentions");
+            int tagsIndex = reader.GetOrdinal("tags");
+            int limit = 50;
+            int currCount = 0;
+            while (reader.Read() && (currCount <= limit))
+            {
+                currCount++;
+                CrimeTweets tweet = new CrimeTweets();
+                tweet.tweet_id = reader.GetInt32(tweetIDIndex);
+                tweet.message = reader.GetString(messageIndex);
+                tweet.latitude = getDoubleSafe(reader, latitudeIndex);//Nullable
+                tweet.longitude = getDoubleSafe(reader, longitudeIndex);//Nullable
+                tweet.location = getStringSafe(reader, locationIndex);// Nullable
+                tweet.post_datetime = reader.GetDateTime(postDatetimeIndex);
+                tweet.recieved_datetime = reader.GetDateTime(recievedDatetimeIndex);
+                tweet.twitter_handle = reader.GetString(twitterHandleIndex);
+                tweet.weather = getStringSafe(reader, weatherIndex);// Nullable
+                tweet.mentions = getStringSafe(reader, mentionsIndex);// Nullable
+                tweet.tags = getStringSafe(reader, tagsIndex);// Nullable
+                tweets.Add(tweet);
+            }
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+        return tweets;
+    }
+
     //Get all tweets in the database
     public List<CrimeTweets> getCrimeTweets()
     {
@@ -76,7 +134,7 @@ public class Service : IService
             int weatherIndex = reader.GetOrdinal("weather");
             int mentionsIndex = reader.GetOrdinal("mentions");
             int tagsIndex = reader.GetOrdinal("tags");
-            int limit = 100;
+            int limit = 50;
             int currCount = 0;
             while(reader.Read() && (currCount <= limit))
             {
@@ -512,6 +570,46 @@ public class Service : IService
         command.Dispose();
         connection.Dispose();
         return statusCode;
+    }
+
+    public int getTextAnalyticsStartPoint()
+    {//Get the last record ID which was 
+        Sentiments mySentiment = new Sentiments();
+
+        SqlConnection connection = new SqlConnection(connectionString);
+        string query = "SELECT TOP 1 * FROM Sentiments ORDER BY sentiment_id DESC";
+        SqlCommand command = new SqlCommand(query);
+        command.Connection = connection;
+        command.CommandType = CommandType.Text;
+
+        try
+        {
+            command.Connection.Open();
+            command.Prepare();
+            SqlDataReader reader = command.ExecuteReader();
+            //Coloumns Index
+            int tweet_idIndex = reader.GetOrdinal("tweet_id");
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+                mySentiment.tweet_id = reader.GetInt32(tweet_idIndex);
+            }
+        }
+        catch (SqlException ex)
+        {
+            Console.WriteLine("Error " + ex.Number + " has occurred: " + ex.Message);
+        }
+        command.Connection.Close();
+        command.Dispose();
+        connection.Dispose();
+
+        if(mySentiment.tweet_id == null || mySentiment.tweet_id < 0)
+        {
+            mySentiment.tweet_id = 0;
+        }
+
+        return mySentiment.tweet_id;
     }
 
     public List<Sentiments> getSentiments()

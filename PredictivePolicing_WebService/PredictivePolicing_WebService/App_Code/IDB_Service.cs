@@ -24,6 +24,12 @@ public interface IService
     // TODO: Add your service operations here
     //---------------------------------------- Crime Tweets -----------------------------------------------------
     [OperationContract]
+    int getTextAnalyticsStartPoint();
+
+    [OperationContract]
+    List<CrimeTweets> getCrimeTweetsToAnalyse();
+
+    [OperationContract]
     List<CrimeTweets> getCrimeTweets();
 
     [OperationContract]
